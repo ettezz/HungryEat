@@ -50,4 +50,36 @@ public class HEAllModel {
 	    }
 		
 	}
+	
+	public int insBregister_User(String userId, String userName, String passwd, String phone, String address) {
+		Connection con = null;
+		PreparedStatement stmt = null;
+		int rs = -1;
+		
+	    try {
+	    	int paramCount = 0; 
+	    	
+	      Class.forName(driver);
+	      con = DriverManager.getConnection(url, user, password);
+	      String sql = " INSERT INTO HE_USERS (USER_ID, USER_NAME, PASSWD, PHONE, ADDRESS, ROLE_TYPE) "
+	      		+ "		VALUES(?, ?, ?, ?, ?,'B') ";
+	      stmt = con.prepareStatement(sql);
+	      stmt.setString(++paramCount, userId);
+	      stmt.setString(++paramCount, userName);
+	      stmt.setString(++paramCount, passwd);
+	      stmt.setString(++paramCount, phone);
+	      stmt.setString(++paramCount, address);
+	      
+	      rs = stmt.executeUpdate();//執行
+	      
+	      return rs;
+	    } catch (Exception ex) {
+	    	System.out.println(ex.getMessage());
+	    	if (ex.getMessage().indexOf("Duplicate") > -1) {
+	    		return -2;
+	    	}
+	      return -1;
+	    }
+		
+	}
 }

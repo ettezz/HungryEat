@@ -260,8 +260,8 @@
 							<!-- 選單-->
 							<nav class="tm-nav">
 								<ul>
-								<li><a href="Cindex.html">首頁</a></li>
-								<li><a href="Cregister.html">註冊</a></li>
+								<li><a href="${pageContext.request.contextPath}/Views/Bindex.jsp">首頁</a></li>
+								<li><a href="${pageContext.request.contextPath}/Views/ChooseRegister.jsp">註冊</a></li>
 								
 							
 								</ul>

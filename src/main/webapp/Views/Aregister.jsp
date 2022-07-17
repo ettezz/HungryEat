@@ -94,7 +94,7 @@
 			
 			//註冊
 		    function insClick(){
-		    	if (!checkNotNull()){
+		    	/*if (!checkNotNull()){
 		    		return;
 		    	}
 		    	var url = "${pageContext.request.contextPath}/BregisterServlet?" 
@@ -125,7 +125,7 @@
 		            error:function(err){
 		            	alert(err);
 		            },
-		        });
+		        });*/
 		    }
 			
 		  	//檢核
@@ -172,7 +172,7 @@
 		  	
 	      //回首頁
 	        function backClick(){
-	        	window.location.href='${pageContext.request.contextPath}/Views/HELogin.jsp';
+	        	window.location.href='${pageContext.request.contextPath}/Views/HElogin.jsp';
 	        }
 		</script>
 	<body class="bg-cyan">

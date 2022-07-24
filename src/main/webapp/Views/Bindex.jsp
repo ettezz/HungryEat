@@ -25,6 +25,51 @@
  
 
   </head>
+  <script type="text/javascript">
+    	
+        
+        $(function () {
+        	
+        	var url = "${pageContext.request.contextPath}/RindexServlet?"
+        			+ "funcType=0";
+        	
+        	url=encodeURI(url);
+        	url=encodeURI(url); //兩次
+        	$.ajax({
+                type: "POST",
+                url: url,
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                success: function(shopList){   
+                	let str = "";
+                    $.each(shopList, function (i, val){
+                		str += "<div class='tm-popular-item' onclick='opebShopClick(\"" + val.userId + "\")'>";
+                		console.log(val.imageName);
+                		if (val.imageName == ""){
+                			str+=  "   <img src='${pageContext.request.contextPath}/upload/noName.jpg' alt='店家尚未上傳' width='300' class='tm-popular-item-img'>";
+                		}else{
+                			str+=  "   <img src='${pageContext.request.contextPath}/upload/" + val.imageName + "' alt='店家尚未上傳' width='300' class='tm-popular-item-img'>";                    	    	
+                		}
+                		str+=  "   <div class='tm-popular-item-description'>" + 
+                	           "     <h3 class='tm-popular-item-title'>" + val.userName + "</h3>" + 
+                	           "       <hr class='tm-popular-item-hr'>" + 
+                	            "  </div>" +           
+                	            "</div>";
+                        
+                	});
+                	$("#showShopDIV").append(str);
+                },
+                error:function(err){
+                	//alert(err);
+                },
+            });
+        	
+        });
+        
+        function opebShopClick(shopId){
+        	window.location.href="${pageContext.request.contextPath}/Views/HELogin.jsp";
+        }
+        
+	</script>
   <body>
 
     <div class="tm-top-header">
@@ -69,76 +114,9 @@
         <!-- 照片選單-->      
         <section class="tm-section tm-section-margin-bottom-0 row">
           <!--並排-->
-          <div class="col-lg-12 tm-popular-items-container">
+          <div class="col-lg-12 tm-popular-items-container" id="showShopDIV">
             
 
-            <!-- 1 -->
-            <div class="tm-popular-item" onclick="window.open('menu.html)">
-              <img src="${pageContext.request.contextPath}/img/drink01.jpg" alt="Popular" class="tm-popular-item-img">
-              <div class="tm-popular-item-description">
-                <h3 class="tm-popular-item-title">梅子兔生活飲品專賣店(西門總店)</h3>
-                  <hr class="tm-popular-item-hr">
-                <p>梅子兔生活飲品專賣創立於2006年，為創新的好喝手搖台灣茶加盟連鎖創業</p>
-                
-              </div>              
-            </div>
-             <!-- 2 -->
-             <div class="tm-popular-item" onclick="menu.html">
-              <img src="${pageContext.request.contextPath}/img/drink01.jpg" alt="Popular" class="tm-popular-item-img">
-              <div class="tm-popular-item-description">
-                <h3 class="tm-popular-item-title">梅子兔生活飲品專賣店(西門總店)</h3>
-                  <hr class="tm-popular-item-hr">
-                <p>梅子兔生活飲品專賣創立於2006年，為創新的好喝手搖台灣茶加盟連鎖創業</p>
-                
-              </div>              
-            </div>
-             <!-- 3 -->
-             <div class="tm-popular-item" onclick="menu.html">
-              <img src="${pageContext.request.contextPath}/img/drink01.jpg" alt="Popular" class="tm-popular-item-img">
-              <div class="tm-popular-item-description">
-                <h3 class="tm-popular-item-title">梅子兔生活飲品專賣店(西門總店)</h3>
-                  <hr class="tm-popular-item-hr">
-                <p>梅子兔生活飲品專賣創立於2006年，為創新的好喝手搖台灣茶加盟連鎖創業</p>
-                
-              </div>              
-            </div>
-             <!-- 4 -->
-             <div class="tm-popular-item" onclick="location.href='menu.html">
-              <img src="${pageContext.request.contextPath}/img/drink01.jpg" alt="Popular" class="tm-popular-item-img">
-              <div class="tm-popular-item-description">
-                <h3 class="tm-popular-item-title">梅子兔生活飲品專賣店(西門總店)</h3>
-                  <hr class="tm-popular-item-hr">
-                <p>梅子兔生活飲品專賣創立於2006年，為創新的好喝手搖台灣茶加盟連鎖創業</p>
-                
-              </div>              
-            </div>
-              <!-- 5 -->
-              <div class="tm-popular-item" onclick="location.href='https://www.google.com.tw/?hl=zh_TW';">
-                <img src="${pageContext.request.contextPath}/img/drink01.jpg" alt="Popular" class="tm-popular-item-img">
-                <div class="tm-popular-item-description">
-                  <h3 class="tm-popular-item-title">梅子兔生活飲品專賣店(西門總店)</h3>
-                    <hr class="tm-popular-item-hr">
-                  <p>梅子兔生活飲品專賣創立於2006年，為創新的好喝手搖台灣茶加盟連鎖創業</p>
-                  
-                </div>              
-              </div>
-                <!-- 6-->
-             <div class="tm-popular-item" onclick="location.href='https://www.google.com.tw/?hl=zh_TW';">
-              <img src="${pageContext.request.contextPath}/img/drink01.jpg" alt="Popular" class="tm-popular-item-img">
-              <div class="tm-popular-item-description">
-                <h3 class="tm-popular-item-title">梅子兔生活飲品專賣店(西門總店)</h3>
-                  <hr class="tm-popular-item-hr">
-                <p>梅子兔生活飲品專賣創立於2006年，為創新的好喝手搖台灣茶加盟連鎖創業</p>
-                
-              </div>              
-            </div>
-
-  
-
-
-           
-            
-           
           </div>          
         </section>
        
@@ -146,8 +124,7 @@
       </div>
     </div> 
     
-        
-     </div>
+      
    
    
  </body>

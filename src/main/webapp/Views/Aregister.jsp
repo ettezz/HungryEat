@@ -3,7 +3,7 @@
 <!DOCTYPE html> 
 <html>
 	<head>
-		<title>巴豆妖 註冊</title>
+		<title>巴豆妖 店家註冊</title>
 		
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
@@ -16,11 +16,10 @@
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/css/demo.css">
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/css/sky-forms.css">
 		
-		<script src="${pageContext.request.contextPath}/js/jquery-1.9.1.min.js"></script>
-		<script src="${pageContext.request.contextPath}/js/jquery.validate.min.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.2.min.js"></script>      <!-- jQuery -->
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/templatemo-script.js"></script>      <!-- Templatemo Script -->
-
+		<script type="text/javascript" src="${pageContext.request.contextPath}/js/ajaxfileupload.js"></script>      <!-- Templatemo Script -->
+		
 		
 		
 	</head>
@@ -94,20 +93,23 @@
 			
 			//註冊
 		    function insClick(){
-		    	/*if (!checkNotNull()){
+		    	if (!checkNotNull()){
 		    		return;
 		    	}
-		    	var url = "${pageContext.request.contextPath}/BregisterServlet?" 
-		    			+ "funcType=0" 
-		    			+ "&userId=" + $("#userIdTXT").val()
-		    			+ "&userName=" + $("#userNameTXT").val() 
-		    			+ "&passwd=" + $("#passwordTXT").val() 
-		    			+ "&phone=" + $("#phoneTXT").val() 
-		    			+ "&address=" + $("#addressTXT").val();
+		    	var url = "${pageContext.request.contextPath}/AregisterServlet?" ;
+		    	
+		    	var data={
+		    		"funcType": "0",
+		    		"userId": $("#userIdTXT").val(),
+		    		"userName": $("#userNameTXT").val(),
+		    		"passwd": $("#passwordTXT").val(),
+		    		"phone": $("#phoneTXT").val(),
+		    		"address": $("#addressTXT").val(),
+		    	};
 		    	
 		    	url=encodeURI(url);
 		    	url=encodeURI(url); //兩次
-		    	$.ajax({
+		    	/*$.ajax({
 		            type: "POST",
 		            url: url,
 		            contentType: "application/x-www-form-urlencoded; charset=utf-8",
@@ -126,6 +128,26 @@
 		            	alert(err);
 		            },
 		        });*/
+		    	$.ajaxFileUpload({
+		            url : url,
+		            secureuri : true ,
+		            fileElementId : "uploadFile",
+		            dataType : "text" ,
+		            data : data,
+		            success : function(msg, status) {
+		            	if (msg == 1){
+		                	alert("註冊成功");
+		                	backClick();
+		                }else if (msg == -2){
+		                	alert("註冊失敗:帳號已存在");
+		                }else{
+		                	alert("註冊失敗");
+		                }
+		            },
+		            error : function(data, status, e) {
+		                alert("註冊失敗");
+		            }
+		        });
 		    }
 			
 		  	//檢核
@@ -139,7 +161,7 @@
 	        		return false;
 	        	}
 	        	if ($("#userNameTXT").val().trim() == ""){
-	        		alert("姓名不得為空");
+	        		alert("店名不得為空");
 	        		return false;
 	        	}
 	        	if ($("#passwordTXT").val().trim() == ""){
@@ -166,13 +188,15 @@
 	        		alert("地址不得為空");
 	        		return false;
 	        	}
-	        	
+	        	if ($("#uploadFile").val() == ""){
+	        		alert("請上傳店家照片");
+	        	}
 	        	return true;
 	        }
 		  	
 	      //回首頁
 	        function backClick(){
-	        	window.location.href='${pageContext.request.contextPath}/Views/HElogin.jsp';
+	        	window.location.href='${pageContext.request.contextPath}/Views/HELogin.jsp';
 	        }
 		</script>
 	<body class="bg-cyan">
@@ -216,7 +240,7 @@
 
 		<div class="body body-s">		
 			<div id="sky-form" class="sky-form">
-				<header>填寫會員資料</header>
+				<header>填寫店家資料</header>
 				
 				<fieldset>	
 					<!--帳號-->			
@@ -234,7 +258,7 @@
 						
 						<label class="input">
 							<i class="icon-append icon-user"></i>
-							<input type="text" name="username" id="userNameTXT" placeholder="--姓名--">
+							<input type="text" name="username" id="userNameTXT" placeholder="--店名--">
 							
 						</label>
 					</section>
@@ -271,7 +295,14 @@
 								
 						</label>
 					</section>
-					
+					<section>
+						
+							<span class="text-left" style="color: rgb(131, 131, 131);">上傳店家照片</span>
+
+							<input type="file" name="uploadfile" id="uploadFile"  style="overflow: hidden" />
+							<div  class="icon-upload-alt"></div>
+							
+					</section>
 				</fieldset>
 					
 				

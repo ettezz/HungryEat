@@ -43,11 +43,11 @@ public class HEUser {
 		return roleType;
 	}
 	
-	public String imageName() {
+	public String getImageName() {
 		return imageName;
 	}
 	
-	public String belongShopId() {
+	public String getBelongShopId() {
 		return belongShopId;
 	}
 

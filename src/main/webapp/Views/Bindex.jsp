@@ -52,6 +52,7 @@
                 		str+=  "   <div class='tm-popular-item-description'>" + 
                 	           "     <h3 class='tm-popular-item-title'>" + val.userName + "</h3>" + 
                 	           "       <hr class='tm-popular-item-hr'>" + 
+                	           "       <p>" + val.address + "</p>" + 
                 	            "  </div>" +           
                 	            "</div>";
                         

@@ -190,6 +190,7 @@
 	        	}
 	        	if ($("#uploadFile").val() == ""){
 	        		alert("請上傳店家照片");
+	        		return false;
 	        	}
 	        	return true;
 	        }

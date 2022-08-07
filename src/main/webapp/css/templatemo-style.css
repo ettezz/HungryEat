@@ -745,3 +745,9 @@ button.tm-more-button {
 @media screen and (max-width: 370px) {
   .tm-welcome-content { margin-bottom: 60px; }
 }
+
+
+.table-wrapper{
+	height: 200px; 
+  	overflow-y: auto; 
+}

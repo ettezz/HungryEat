@@ -73,36 +73,7 @@
 	</script>
   <body>
 
-    <div class="tm-top-header">
-      <div class="container">
-        <div class="row">
-          <div class="tm-top-header-inner">
-            <div class="tm-logo-container">
-              <img src="${pageContext.request.contextPath}/img/logo.png" alt="Logo" class="tm-site-logo">
-             <!--<h1 class="tm-site-name tm-handwriting-font">Cafe House</h1>--> 
-            </div>
-            
-            <!-- 選單-->
-            <nav class="tm-nav">
-              <ul>
-                <li><a href="${pageContext.request.contextPath}/Views/Bindex.jsp">首頁</a></li>
-                
-                <li><a href="${pageContext.request.contextPath}/Views/Bmodify.jsp">修改會員資料</a></li>
-                <li><a href="index.html">登出</a></li>
-            
-              </ul>
-               
-              
-              <!--購物車-->
-              <div class="shopping-cart">
-                <a href="Corder.html"><img src="${pageContext.request.contextPath}/img/shoopingcar-01.png" alt=""></a>
-              </div>
-        
-            </nav>   
-          </div>           
-        </div>    
-      </div>
-    </div>
+    <%@include file="/Views/HEmenuBarB.jsp" %>
     
 
     <div class="tm-main-section light-gray-bg">

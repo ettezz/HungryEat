@@ -155,4 +155,131 @@ public class HEAllModel {
 	    }
 		
 	}
+	
+	public List<HEItem> getAupProduct_Items(String shopId, String itemId, String itemName) {
+		Connection con = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		List<HEItem> itemList = new ArrayList<HEItem>();
+	    try {
+	    	int paramCount = 0; 
+	    	
+	      Class.forName(driver);
+	      con = DriverManager.getConnection(url, user, password);
+	      String sql = "SELECT * FROM HE_ITEMS WHERE SHOP_ID = ? AND ITEM_ID like CONCAT('%', ?, '%') AND ITEM_NAME like CONCAT('%', ?, '%') ORDER BY ITEM_ID  ";
+	      stmt = con.prepareStatement(sql);
+	      stmt.setString(++paramCount, shopId);
+	      stmt.setString(++paramCount, itemId);
+	      stmt.setString(++paramCount, itemName);
+	      rs = stmt.executeQuery();//執行
+	      
+	      while(rs.next()){
+	    	String SHOP_ID = rs.getString("SHOP_ID");
+		    int ITEM_ID = rs.getInt("ITEM_ID");
+	      	String ITEM_NAME = rs.getString("ITEM_NAME");
+	      	int ITEM_PRICE = rs.getInt("ITEM_PRICE");
+	      	String ITEM_MEMO = rs.getString("ITEM_MEMO");
+	      	String ITEM_IMG_NAME = rs.getString("ITEM_IMG_NAME");
+	      	
+	      	itemList.add(new HEItem(SHOP_ID, ITEM_ID, ITEM_NAME, ITEM_PRICE, ITEM_MEMO, ITEM_IMG_NAME));
+	      	
+	      }
+	      if (itemList.size() > 0) {
+	    	  return itemList;
+	      }else {
+	    	  return null;
+	      }
+	    } catch (Exception ex) {
+	    	System.out.println(ex.getMessage());
+	      return null;
+	    }
+		
+	}
+	
+	public int insAupProduct_Items(String shopId, String itemName, int itemPrice, String itemMemo, String fileName) {
+		Connection con = null;
+		PreparedStatement stmt = null;
+		int rs = -1;
+		
+	    try {
+	    	int paramCount = 0; 
+	    	
+	      Class.forName(driver);
+	      con = DriverManager.getConnection(url, user, password);
+	      String sql = "INSERT INTO HE_ITEMS (SHOP_ID, ITEM_NAME, ITEM_PRICE, ITEM_MEMO, ITEM_IMG_NAME) VALUES (?, ?, ?, ?, ?) ";
+	      stmt = con.prepareStatement(sql);
+	      stmt.setString(++paramCount, shopId);
+	      stmt.setString(++paramCount, itemName);
+	      stmt.setInt(++paramCount, itemPrice);
+	      stmt.setString(++paramCount, itemMemo);
+	      stmt.setString(++paramCount, fileName);
+	      rs = stmt.executeUpdate();//執行
+	      
+	      return rs;
+	    } catch (Exception ex) {
+	    	System.out.println(ex.getMessage());
+	      return -1;
+	    }
+		
+	}
+	
+	public int updAupProduct_Items(String shopId, int itemId, String itemName, int itemPrice, String itemMemo, String fileName) {
+		Connection con = null;
+		PreparedStatement stmt = null;
+		int rs = -1;
+		
+	    try {
+	    	int paramCount = 0; 
+	    	
+	      Class.forName(driver);
+	      con = DriverManager.getConnection(url, user, password);
+	      String sql = "UPDATE HE_ITEMS SET ITEM_NAME = ?, ITEM_PRICE = ?, ITEM_MEMO = ? ";
+	      if (!(fileName.equals("") || fileName == null)) {
+	    	  sql += ", ITEM_IMG_NAME = ? "; 
+	      }
+	      sql += " WHERE SHOP_ID = ? AND ITEM_ID = ? ";
+	      
+	      stmt = con.prepareStatement(sql);
+	      stmt.setString(++paramCount, itemName);
+	      stmt.setInt(++paramCount, itemPrice);
+	      stmt.setString(++paramCount, itemMemo);
+	      
+	      if (!(fileName.equals("") || fileName == null)) {
+	    	  stmt.setString(++paramCount, fileName);
+	      }
+	      stmt.setString(++paramCount, shopId);
+	      stmt.setInt(++paramCount, itemId);
+	      rs = stmt.executeUpdate();//執行
+	      
+	      return rs;
+	    } catch (Exception ex) {
+	    	System.out.println(ex.getMessage());
+	      return -1;
+	    }
+		
+	}
+	
+	public int delAupProduct_Items(String shopId, int itemId) {
+		Connection con = null;
+		PreparedStatement stmt = null;
+		int rs = -1;
+		
+	    try {
+	    	int paramCount = 0; 
+	    	
+	      Class.forName(driver);
+	      con = DriverManager.getConnection(url, user, password);
+	      String sql = " DELETE FROM HE_ITEMS WHERE SHOP_ID = ? AND ITEM_ID = ? ";
+	      stmt = con.prepareStatement(sql);
+	      stmt.setString(++paramCount, shopId);
+	      stmt.setInt(++paramCount, itemId);
+	      rs = stmt.executeUpdate();//執行
+	      
+	      return rs;
+	    } catch (Exception ex) {
+	    	System.out.println(ex.getMessage());
+	      return -1;
+	    }
+		
+	}
 }

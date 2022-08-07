@@ -239,7 +239,7 @@
                                     <th>商品名稱</th>
                                     <th>價錢</th>
                                     <th>商品敘述</th>
-                                    <th></th>
+                                    <th  style="min-width: 80px;"></th>
                             </tr>
                         </thead>
 
@@ -255,7 +255,7 @@
 							<td><%=item.getItemName()%></td>
 							<td><%=item.getItemPrice()%></td>
 							<td><%=item.getItemMemo()%></td>
-							<td><button class="button" onClick="fillItem('<%=item.getItemId()%>','<%=item.getItemName()%>','<%=item.getItemPrice()%>','<%=item.getItemMemo()%>')">編輯</button></td>
+							<td><button class="button" style="padding: 0 15px;"  onClick="fillItem('<%=item.getItemId()%>','<%=item.getItemName()%>','<%=item.getItemPrice()%>','<%=item.getItemMemo()%>')">編輯</button></td>
 						</tr>
 				<%
 						}

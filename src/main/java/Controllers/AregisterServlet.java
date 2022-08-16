@@ -64,7 +64,7 @@ public class AregisterServlet extends HttpServlet {
 
         //2、初始化建立的SmartUpload物件
         smartUpload.initialize(getServletConfig(), request, response);
-        smartUpload.setAllowedFilesList("jpg,jpeg,bmp,gif,tif,png");
+        smartUpload.setAllowedFilesList("jpg,jpeg,bmp,gif,tif,png,JPG,JPEG,BMP,GIF,TIF,PNG");
         try {
             //3、進行檔案的上傳
             smartUpload.upload();

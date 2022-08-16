@@ -235,9 +235,9 @@
                     <table style="width:100%">
                         <thead>
                             <tr>
-                                    <th style="text-align:center;">商品編號</th>
-                                    <th>商品名稱</th>
-                                    <th>價錢</th>
+                                    <th style="text-align:center; width:14%">商品編號</th>
+                                    <th style="text-align:center; width:14%;">商品名稱</th>
+                                    <th style="text-align:center; width:14%;">價錢</th>
                                     <th>商品敘述</th>
                                     <th style="min-width: 80px;"></th>
                             </tr>
@@ -252,8 +252,8 @@
 				%>
 						<tr>
 							<td style="text-align:center;"><%=item.getItemId()%></td>
-							<td><%=item.getItemName()%></td>
-							<td><%=item.getItemPrice()%></td>
+							<td style="text-align:center;"><%=item.getItemName()%></td>
+							<td style="text-align:center;"><%=item.getItemPrice()%></td>
 							<td><%=item.getItemMemo()%></td>
 							<td style="text-align:center;"><button class="button" style="padding: 0 15px; float:inherit; margin: 10px auto;"  onClick="fillItem('<%=item.getItemId()%>','<%=item.getItemName()%>','<%=item.getItemPrice()%>','<%=item.getItemMemo()%>')">編輯</button></td>
 						</tr>

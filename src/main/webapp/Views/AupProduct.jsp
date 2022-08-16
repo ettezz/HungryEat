@@ -199,7 +199,7 @@
     
     <!--MAIN-->
        
-        <div class="body">
+        <div class="body" style="max-width: 55%; min-width: 800px;">
         	<div class="sky-form">	
             <!--form-->
                 <form action="${pageContext.request.contextPath}/AupProductServlet" method="post" name="searchClick" id="sky-form" class="sky-form">
@@ -232,14 +232,14 @@
 				  <!--table-->  
                     <fieldset>
                     <div class="table-wrapper" style="height: 300px;overflow-y: auto;">	
-                    <table  class=""  style="width:100%">
+                    <table style="width:100%">
                         <thead>
                             <tr>
-                                    <th>商品編號</th>
+                                    <th style="text-align:center;">商品編號</th>
                                     <th>商品名稱</th>
                                     <th>價錢</th>
                                     <th>商品敘述</th>
-                                    <th  style="min-width: 80px;"></th>
+                                    <th style="min-width: 80px;"></th>
                             </tr>
                         </thead>
 
@@ -251,11 +251,11 @@
 					
 				%>
 						<tr>
-							<td><%=item.getItemId()%></td>
+							<td style="text-align:center;"><%=item.getItemId()%></td>
 							<td><%=item.getItemName()%></td>
 							<td><%=item.getItemPrice()%></td>
 							<td><%=item.getItemMemo()%></td>
-							<td><button class="button" style="padding: 0 15px;"  onClick="fillItem('<%=item.getItemId()%>','<%=item.getItemName()%>','<%=item.getItemPrice()%>','<%=item.getItemMemo()%>')">編輯</button></td>
+							<td style="text-align:center;"><button class="button" style="padding: 0 15px; float:inherit; margin: 10px auto;"  onClick="fillItem('<%=item.getItemId()%>','<%=item.getItemName()%>','<%=item.getItemPrice()%>','<%=item.getItemMemo()%>')">編輯</button></td>
 						</tr>
 				<%
 						}

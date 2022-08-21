@@ -42,7 +42,7 @@
                 success: function(shopList){   
                 	let str = "";
                     $.each(shopList, function (i, val){
-                		str += "<div class='tm-popular-item' onclick='opebShopClick(\"" + val.userId + "\")'>";
+                		str += "<div class='tm-popular-item' onclick='openShopClick(\"" + val.userId + "\",\"" + val.userName + "\")'>";
                 		console.log(val.imageName);
                 		if (val.imageName == ""){
                 			str+=  "   <img src='${pageContext.request.contextPath}/upload/noName.jpg' alt='店家尚未上傳' width='300' class='tm-popular-item-img'>";
@@ -66,8 +66,10 @@
         	
         });
         
-        function opebShopClick(shopId){
-        	window.location.href="${pageContext.request.contextPath}/Views/Rindex.jsp";
+        function openShopClick(shopId, shopName){
+        	window.location.href="${pageContext.request.contextPath}/Views/Bcontact.jsp?" +
+        			"shopId=" + shopId +
+        			"&shopName=" + shopName;
         }
         
 	</script>

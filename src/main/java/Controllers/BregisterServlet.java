@@ -55,7 +55,7 @@ public class BregisterServlet extends HttpServlet {
 		userName = java.net.URLDecoder.decode(userName, "UTF-8"); //中文編碼
 		address = java.net.URLDecoder.decode(address, "UTF-8"); //中文編碼
 		
-		int result = new HEAllModel().insBregister_User(userId, userName, passwd, phone, address); 
+		int result = new HEAllModel().insBregisterUser(userId, userName, passwd, phone, address); 
 		//request.setAttribute("result", result);
 		response.setContentType("text/html;charset=UTF-8");
         response.getWriter().print(result);

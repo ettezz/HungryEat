@@ -99,7 +99,7 @@ public class AregisterServlet extends HttpServlet {
     		userName = java.net.URLDecoder.decode(userName, "UTF-8"); //中文編碼
     		address = java.net.URLDecoder.decode(address, "UTF-8"); //中文編碼
     		
-    		int result = new HEAllModel().insAregister_User(userId, userName, passwd, phone, address, filename); 
+    		int result = new HEAllModel().insAregisterUser(userId, userName, passwd, phone, address, filename); 
     		//request.setAttribute("result", result);
     		response.setContentType("text/html;charset=UTF-8");
             response.getWriter().print(result);

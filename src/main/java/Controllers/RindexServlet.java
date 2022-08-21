@@ -54,17 +54,17 @@ public class RindexServlet extends HttpServlet {
 		
 		String funcType = request.getParameter("funcType");
 		if (funcType.equals("0")) {
-			getA_Users(request, response);
+			getAUsers(request, response);
 		}
 	}
 	
-	protected void getA_Users(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void getAUsers(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//request.setCharacterEncoding("UTF-8");
 		
 		//String userId = request.getParameter("userId") == null ? "" : request.getParameter("userId");
 		//String notFinish = request.getParameter("notFinish") == null ? "" : request.getParameter("notFinish");
-		System.out.println(request.getSession().getServletContext().getRealPath(""));
-		List<HEUser> userList = new HEAllModel().getA_Users();
+		//System.out.println(request.getSession().getServletContext().getRealPath(""));
+		List<HEUser> userList = new HEAllModel().getAUsers();
 		
 		
 		String result = new JSONArray(userList).toString();//轉json字串

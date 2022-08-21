@@ -17,7 +17,7 @@ public class HEAllModel {
 		
 	}
 	
-	public HEUser getLogin_Users(String userId, String passwd) {
+	public HEUser getLoginUsers(String userId, String passwd) {
 		Connection con = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -33,15 +33,15 @@ public class HEAllModel {
 	      rs = stmt.executeQuery();//執行
 	      
 	      if(rs.next()){
-	      	String USER_ID = rs.getString("USER_ID");
-	      	String USER_NAME = rs.getString("USER_NAME");
-	      	String PHONE = rs.getString("PHONE");
-	      	String ADDRESS = rs.getString("ADDRESS");
-	      	String ROLE_TYPE = rs.getString("ROLE_TYPE");
-	      	String IMG_NAME = rs.getString("IMG_NAME");
-	      	String BELONG_SHOP_ID = rs.getString("BELONG_SHOP_ID");
+	      	//String USER_ID = rs.getString("USER_ID");
+	      	String userNameSele = rs.getString("USER_NAME");
+	      	String phoneSele = rs.getString("PHONE");
+	      	String addressSele = rs.getString("ADDRESS");
+	      	String roleTypeSele = rs.getString("ROLE_TYPE");
+	      	String imgNameSele = rs.getString("IMG_NAME");
+	      	String belongShopIdSele = rs.getString("BELONG_SHOP_ID") == null? "" : rs.getString("BELONG_SHOP_ID");
 	      	
-	      	userModel = new HEUser(USER_ID, USER_NAME, PHONE, ADDRESS, ROLE_TYPE, IMG_NAME, BELONG_SHOP_ID);
+	      	userModel = new HEUser(userId, userNameSele, phoneSele, addressSele, roleTypeSele, imgNameSele, belongShopIdSele);
 	      }
 	      return userModel;
 	    } catch (Exception ex) {
@@ -51,7 +51,7 @@ public class HEAllModel {
 		
 	}
 	
-	public int insBregister_User(String userId, String userName, String passwd, String phone, String address) {
+	public int insBregisterUser(String userId, String userName, String passwd, String phone, String address) {
 		Connection con = null;
 		PreparedStatement stmt = null;
 		int rs = -1;
@@ -83,7 +83,7 @@ public class HEAllModel {
 		
 	}
 	
-	public int insAregister_User(String userId, String userName, String passwd, String phone, String address, String fileName) {
+	public int insAregisterUser(String userId, String userName, String passwd, String phone, String address, String fileName) {
 		Connection con = null;
 		PreparedStatement stmt = null;
 		int rs = -1;
@@ -116,7 +116,7 @@ public class HEAllModel {
 		
 	}
 	
-	public List<HEUser> getA_Users() {
+	public List<HEUser> getAUsers() {
 		Connection con = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -132,15 +132,15 @@ public class HEAllModel {
 	      rs = stmt.executeQuery();//執行
 	      
 	      while(rs.next()){
-	      	String USER_ID = rs.getString("USER_ID");
-	      	String USER_NAME = rs.getString("USER_NAME");
-	      	String PHONE = rs.getString("PHONE");
-	      	String ADDRESS = rs.getString("ADDRESS");
-	      	String ROLE_TYPE = rs.getString("ROLE_TYPE");
-	      	String IMG_NAME = rs.getString("IMG_NAME") == null? "" : rs.getString("IMG_NAME");
-	      	String BELONG_SHOP_ID = rs.getString("BELONG_SHOP_ID") == null? "" : rs.getString("BELONG_SHOP_ID");
+	      	String userIdSele = rs.getString("USER_ID");
+	      	String userNameSele = rs.getString("USER_NAME");
+	      	String phoneSele = rs.getString("PHONE");
+	      	String addressSele = rs.getString("ADDRESS");
+	      	String roleTypeSele = rs.getString("ROLE_TYPE");
+	      	String imgNameSele = rs.getString("IMG_NAME") == null? "" : rs.getString("IMG_NAME");
+	      	String belongShopIdSele = rs.getString("BELONG_SHOP_ID") == null? "" : rs.getString("BELONG_SHOP_ID");
 	      	
-	      	usersList.add(new HEUser(USER_ID, USER_NAME, PHONE, ADDRESS, ROLE_TYPE, IMG_NAME, BELONG_SHOP_ID));
+	      	usersList.add(new HEUser(userIdSele, userNameSele, phoneSele, addressSele, roleTypeSele, imgNameSele, belongShopIdSele));
 	      	
 	      }
 	      
@@ -156,7 +156,7 @@ public class HEAllModel {
 		
 	}
 	
-	public List<HEItem> getAupProduct_Items(String shopId, String itemId, String itemName) {
+	public List<HEItem> getAupProductItems(String shopId, String itemId, String itemName) {
 		Connection con = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -174,14 +174,14 @@ public class HEAllModel {
 	      rs = stmt.executeQuery();//執行
 	      
 	      while(rs.next()){
-	    	String SHOP_ID = rs.getString("SHOP_ID");
-		    int ITEM_ID = rs.getInt("ITEM_ID");
-	      	String ITEM_NAME = rs.getString("ITEM_NAME");
-	      	int ITEM_PRICE = rs.getInt("ITEM_PRICE");
-	      	String ITEM_MEMO = rs.getString("ITEM_MEMO");
-	      	String ITEM_IMG_NAME = rs.getString("ITEM_IMG_NAME");
+	    	//String SHOP_ID = rs.getString("SHOP_ID");
+		    int itemIdSele = rs.getInt("ITEM_ID");
+	      	String itemNameSele = rs.getString("ITEM_NAME");
+	      	int itemPriceSele = rs.getInt("ITEM_PRICE");
+	      	String itemMemoSele = rs.getString("ITEM_MEMO");
+	      	String itemImgNameSele = rs.getString("ITEM_IMG_NAME");
 	      	
-	      	itemList.add(new HEItem(SHOP_ID, ITEM_ID, ITEM_NAME, ITEM_PRICE, ITEM_MEMO, ITEM_IMG_NAME));
+	      	itemList.add(new HEItem(shopId, itemIdSele, itemNameSele, itemPriceSele, itemMemoSele, itemImgNameSele));
 	      	
 	      }
 	      if (itemList.size() > 0) {
@@ -196,7 +196,7 @@ public class HEAllModel {
 		
 	}
 	
-	public int insAupProduct_Items(String shopId, String itemName, int itemPrice, String itemMemo, String fileName) {
+	public int insAupProductItems(String shopId, String itemName, int itemPrice, String itemMemo, String fileName) {
 		Connection con = null;
 		PreparedStatement stmt = null;
 		int rs = -1;
@@ -223,7 +223,7 @@ public class HEAllModel {
 		
 	}
 	
-	public int updAupProduct_Items(String shopId, int itemId, String itemName, int itemPrice, String itemMemo, String fileName) {
+	public int updAupProductItems(String shopId, int itemId, String itemName, int itemPrice, String itemMemo, String fileName) {
 		Connection con = null;
 		PreparedStatement stmt = null;
 		int rs = -1;
@@ -259,7 +259,7 @@ public class HEAllModel {
 		
 	}
 	
-	public int delAupProduct_Items(String shopId, int itemId) {
+	public int delAupProductItems(String shopId, int itemId) {
 		Connection con = null;
 		PreparedStatement stmt = null;
 		int rs = -1;
@@ -275,6 +275,79 @@ public class HEAllModel {
 	      stmt.setInt(++paramCount, itemId);
 	      rs = stmt.executeUpdate();//執行
 	      
+	      return rs;
+	    } catch (Exception ex) {
+	    	System.out.println(ex.getMessage());
+	      return -1;
+	    }
+		
+	}
+	
+	public int insContactOrder(String shopId, String userId, String shipDate, String shipAddress, String shipPhone, 
+			String orderMemo, int totalPrice, String itemId, 
+			String num,String orderDtlPrice, String orderDtlMemo) {
+		Connection con = null;
+		PreparedStatement stmt = null;
+		int rs = -1;
+			
+	    try {
+	    	String urlForMulti = url + "?allowMultiQueries=true"; //允許多次指令
+	    	
+	    	String[] itemIdArr = itemId.split(";");
+	    	String[] numArr = num.split(";");
+	    	String[] orderDtlPriceArr = orderDtlPrice.split(";");
+	    	String[] orderDtlMemoArr = orderDtlMemo.split(";!");
+	    	
+	    	int paramCount = 0; 
+	    	
+	      Class.forName(driver);
+	      con = DriverManager.getConnection(urlForMulti, user, password);
+	      con.setAutoCommit(false);
+	      String sql =/* " START TRANSACTION; "
+	      		+*/ "INSERT INTO HE_ORDER_TITLE (SHOP_ID, USER_ID, SHIP_DATE, SHIP_ADDRESS, SHIP_PHONE, CR_DATE, CR_USER_ID, PROC_DATE, PROC_USER_ID, ORDER_STATUS, ORDER_TYPE, ORDER_MEMO, TOTAL_PRICE) "
+	      		+ "		VALUES (?, ?, ?, ?, ?, NOW(), ?, NOW(), ?, '0', '0', ?, ?); ";
+	      
+	      sql +=	 "INSERT INTO HE_ORDER_DTL (ORDER_ID, SHOP_ID, ITEM_ID, NUM, ORDERDTL_PRICE, ORDERDTL_MEMO) "
+	      		+ "		VALUES  ";
+	      		
+	      for (int i = 0; i < itemIdArr.length; i++) {
+	    	  if (i > 0) {
+	    		  sql += ",";
+	    	  }
+	    	  sql += " ((SELECT (AUTO_INCREMENT - 1) FROM information_schema.TABLES WHERE (TABLE_NAME = 'HE_ORDER_TITLE')), ?, ?, ?, ?, ?) ";
+	      }
+	      /*sql += "	; "
+		      		+ "COMMIT ";*/
+	      
+	      stmt = con.prepareStatement(sql);
+	      stmt.setString(++paramCount, shopId);
+	      stmt.setString(++paramCount, userId);
+	      stmt.setString(++paramCount, shipDate);
+	      stmt.setString(++paramCount, shipAddress);
+	      stmt.setString(++paramCount, shipPhone);
+	      stmt.setString(++paramCount, userId);
+	      stmt.setString(++paramCount, userId);
+	      stmt.setString(++paramCount, orderMemo);
+	      stmt.setInt(++paramCount, totalPrice);
+	      for (int i = 0; i < itemIdArr.length; i++) {
+	    	  stmt.setString(++paramCount, shopId);
+	    	  stmt.setInt(++paramCount, Integer.parseInt(itemIdArr[i]));
+	    	  stmt.setInt(++paramCount, Integer.parseInt(numArr[i]));
+	    	  stmt.setInt(++paramCount, Integer.parseInt(orderDtlPriceArr[i]));
+	    	  stmt.setString(++paramCount, orderDtlMemoArr[i]);
+	      }
+	      try {
+		      rs = stmt.executeUpdate();//執行
+		      if (rs > 0) {
+		    	  con.commit();
+		      }else{
+		    	  con.rollback();
+		      }
+	      }catch (Exception ex) {
+	    	  con.rollback();
+	    	  System.out.println(ex.getMessage());
+			  return -1;
+	      }
 	      return rs;
 	    } catch (Exception ex) {
 	    	System.out.println(ex.getMessage());

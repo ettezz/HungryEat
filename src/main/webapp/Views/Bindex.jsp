@@ -42,7 +42,7 @@
                 success: function(shopList){   
                 	let str = "";
                     $.each(shopList, function (i, val){
-                		str += "<div class='tm-popular-item' onclick='opebShopClick(\"" + val.userId + "\")'>";
+                		str += "<div class='tm-popular-item' onclick='openShopClick(\"" + val.userId + "\")'>";
                 		console.log(val.imageName);
                 		if (val.imageName == ""){
                 			str+=  "   <img src='${pageContext.request.contextPath}/upload/noName.jpg' alt='店家尚未上傳' width='300' class='tm-popular-item-img'>";
@@ -66,7 +66,7 @@
         	
         });
         
-        function opebShopClick(shopId){
+        function openShopClick(shopId){
         	window.location.href="${pageContext.request.contextPath}/Views/HELogin.jsp";
         }
         
@@ -91,13 +91,6 @@
                 <li><a href="${pageContext.request.contextPath}/Views/ChooseRegister.jsp">註冊</a><p>|</p>  <a href="${pageContext.request.contextPath}/Views/HELogin.jsp">登入</a></li>
             
               </ul>
-               
-              
-              <!--購物車-->
-              <div class="shopping-cart">
-                <a href="Corder.html"><img src="${pageContext.request.contextPath}/img/shoopingcar-01.png" alt=""></a>
-              </div>
-        
             </nav>   
           </div>           
         </div>    

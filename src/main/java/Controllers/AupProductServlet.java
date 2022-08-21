@@ -63,9 +63,9 @@ public class AupProductServlet extends HttpServlet {
         try {
         	if (funcType != null){
         		if (funcType.equals("0")) {
-        			getAupProduct_Items(request, response);
+        			getAupProductItems(request, response);
         		}else if (funcType.equals("3")) {
-        			delAupProduct_Items(request, response);
+        			delAupProductItems(request, response);
         		}
         	}
         	else{
@@ -84,9 +84,9 @@ public class AupProductServlet extends HttpServlet {
             	funcType = req.getParameter("funcType");
             	
             	if (funcType.equals("1")) {
-        			insAupProduct_Items(request, response, smartUpload, req);
+            		insAupProductItems(request, response, smartUpload, req);
         		}else if (funcType.equals("2")) {
-        			updAupProduct_Items(request, response, smartUpload, req);
+        			updAupProductItems(request, response, smartUpload, req);
         		}
             }
             
@@ -98,14 +98,14 @@ public class AupProductServlet extends HttpServlet {
         
 	}
 	
-	protected void getAupProduct_Items(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void getAupProductItems(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		
 		String shopId = request.getParameter("shopId") == null ? "" : request.getParameter("shopId");
 		String itemId = request.getParameter("itemId") == null ? "" : request.getParameter("itemId");
 		String itemName = request.getParameter("itemName") == null ? "" : request.getParameter("itemName");
 		
-		List<HEItem> itemList = new HEAllModel().getAupProduct_Items(shopId, itemId, itemName); 
+		List<HEItem> itemList = new HEAllModel().getAupProductItems(shopId, itemId, itemName); 
 		if (itemList != null) {
 			request.setAttribute("itemList", itemList);
 		}
@@ -116,7 +116,7 @@ public class AupProductServlet extends HttpServlet {
 	}
 
 	
-	protected void insAupProduct_Items(HttpServletRequest request, HttpServletResponse response, SmartUpload smartUpload, Request req) throws ServletException, IOException {
+	protected void insAupProductItems(HttpServletRequest request, HttpServletResponse response, SmartUpload smartUpload, Request req) throws ServletException, IOException {
 		//request.setCharacterEncoding("BIG5");
 		
 		request.setCharacterEncoding("UTF-8");
@@ -144,12 +144,14 @@ public class AupProductServlet extends HttpServlet {
 
                 //為了防止重名檔案的bug，我們這裡採用檔案上傳的時候作為檔名來儲存
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-                String fileExt = curFile.getFileExt();                                  //獲得當前檔案的字尾名
-                filename = simpleDateFormat.format(new Date()) + "." + fileExt;
-
-                String lastFilePath = fileSavePath + "/" + filename;    //當前檔案的儲存路徑
-
-                curFile.saveAs(lastFilePath);
+                String fileExt = curFile.getFileExt();//獲得當前檔案的字尾名
+                if (!fileExt.equals("")) {
+	                filename = simpleDateFormat.format(new Date()) + "." + fileExt;
+	
+	                String lastFilePath = fileSavePath + "/" + filename;    //當前檔案的儲存路徑
+	
+	                curFile.saveAs(lastFilePath);
+                }
             }
             
             
@@ -162,7 +164,7 @@ public class AupProductServlet extends HttpServlet {
 			itemName = java.net.URLDecoder.decode(itemName, "UTF-8");
 			itemMemo = java.net.URLDecoder.decode(itemMemo, "UTF-8");
 			
-			int result = new HEAllModel().insAupProduct_Items(shopId, itemName, itemPrice, itemMemo, filename); 
+			int result = new HEAllModel().insAupProductItems(shopId, itemName, itemPrice, itemMemo, filename); 
 			//request.setAttribute("result", result);
 			response.setContentType("text/html;charset=UTF-8");
 	        response.getWriter().print(result);
@@ -176,7 +178,7 @@ public class AupProductServlet extends HttpServlet {
         }
 	}
 	
-	protected void updAupProduct_Items(HttpServletRequest request, HttpServletResponse response, SmartUpload smartUpload, Request req) throws ServletException, IOException {
+	protected void updAupProductItems(HttpServletRequest request, HttpServletResponse response, SmartUpload smartUpload, Request req) throws ServletException, IOException {
 		//request.setCharacterEncoding("BIG5");
 		
 		request.setCharacterEncoding("UTF-8");
@@ -204,12 +206,15 @@ public class AupProductServlet extends HttpServlet {
 
                 //為了防止重名檔案的bug，我們這裡採用檔案上傳的時候作為檔名來儲存
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-                String fileExt = curFile.getFileExt();                                  //獲得當前檔案的字尾名
-                filename = simpleDateFormat.format(new Date()) + "." + fileExt;
-
-                String lastFilePath = fileSavePath + "/" + filename;    //當前檔案的儲存路徑
-
-                curFile.saveAs(lastFilePath);
+                String fileExt = curFile.getFileExt(); //獲得當前檔案的字尾名
+                
+                if (!fileExt.equals("")) {
+	                filename = simpleDateFormat.format(new Date()) + "." + fileExt;
+	
+	                String lastFilePath = fileSavePath + "/" + filename;    //當前檔案的儲存路徑
+	
+	                curFile.saveAs(lastFilePath);
+                }
             }
             
             
@@ -222,7 +227,7 @@ public class AupProductServlet extends HttpServlet {
 			itemName = java.net.URLDecoder.decode(itemName, "UTF-8"); //中文編碼
 			itemMemo = java.net.URLDecoder.decode(itemMemo, "UTF-8"); //中文編碼
 			
-			int result = new HEAllModel().updAupProduct_Items(shopId, itemId, itemName, itemPrice, itemMemo, filename); 
+			int result = new HEAllModel().updAupProductItems(shopId, itemId, itemName, itemPrice, itemMemo, filename); 
 			//request.setAttribute("result", result);
 			response.setContentType("text/html;charset=UTF-8"); 
 	        response.getWriter().print(result);
@@ -236,13 +241,13 @@ public class AupProductServlet extends HttpServlet {
         }
 	}
 	
-	protected void delAupProduct_Items(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void delAupProductItems(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//request.setCharacterEncoding("BIG5");
 		
 		String shopId = request.getParameter("shopId") == null ? "" : request.getParameter("shopId");
 		int itemId = request.getParameter("itemId") == null ? -1 : Integer.parseInt(request.getParameter("itemId"));
 		
-		int result = new HEAllModel().delAupProduct_Items(shopId, itemId); 
+		int result = new HEAllModel().delAupProductItems(shopId, itemId); 
 		//request.setAttribute("result", result);
 		response.setContentType("text/html;charset=UTF-8");
         response.getWriter().print(result);

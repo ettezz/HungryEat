@@ -58,7 +58,7 @@ public class HELoginServlet extends HttpServlet {
 		String userId = request.getParameter("account") == null ? "" : request.getParameter("account");
 		String passwd = request.getParameter("password") == null ? "" : request.getParameter("password");
 		
-		HEUser userModel = new HEAllModel().getLogin_Users(userId, passwd); 
+		HEUser userModel = new HEAllModel().getLoginUsers(userId, passwd); 
 		request.setAttribute("userModel", userModel);
 		request.setAttribute("sent", true);
 		

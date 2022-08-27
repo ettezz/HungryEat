@@ -14,7 +14,9 @@ public class HEOrderTitle {
 	private String procDate;
 	private String procUserId;
 	private String orderStatus;
+	private String orderCStatus;
 	private String orderType;
+	private String orderCType;
 	private String orderMemo;
 	private int totalPrice;
 	private String shipperId;
@@ -28,8 +30,8 @@ public class HEOrderTitle {
 	
 	
 	public HEOrderTitle(int orderId, String shopId, String shopName, String userId, String userName, String shipDate, String shipAddress, String shipPhone, 
-			String crDate, String crUserId, String procDate, String procUserId, String orderStatus,
-			String orderType, String orderMemo, int totalPrice, String shipperId, String shipperName, String shipperPhone) {
+			String crDate, String crUserId, String procDate, String procUserId, String orderStatus, String orderCStatus,
+			String orderType, String orderCType, String orderMemo, int totalPrice, String shipperId, String shipperName, String shipperPhone) {
 		
 		this.orderId = orderId;
 		this.shopId = shopId;
@@ -44,7 +46,9 @@ public class HEOrderTitle {
 		this.procDate = procDate;
 		this.procUserId = procUserId;
 		this.orderStatus = orderStatus;
+		this.orderCStatus = orderCStatus;
 		this.orderType = orderType;
+		this.orderCType = orderCType;
 		this.orderMemo = orderMemo;
 		this.totalPrice = totalPrice;
 		this.shipperId = shipperId;
@@ -91,8 +95,14 @@ public class HEOrderTitle {
 	public String getOrderStatus() {
 		return orderStatus;
 	}
+	public String getOrderCStatus() {
+		return orderCStatus;
+	}
 	public String getOrderType() {
 		return orderType;
+	}
+	public String getOrderCType() {
+		return orderCType;
 	}
 	public String getOrderMemo() {
 		return orderMemo;

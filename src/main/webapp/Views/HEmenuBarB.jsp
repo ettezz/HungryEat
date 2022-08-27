@@ -18,7 +18,8 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.2.min.js"></script>      <!-- jQuery -->
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/templatemo-script.js"></script>      <!-- Templatemo Script -->
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/ajaxfileupload.js"></script>      <!-- Templatemo Script -->
-			
+		
+	
 </head>
 <script type="text/javascript">
 		//登出
@@ -67,14 +68,14 @@
                 <li><a href="${pageContext.request.contextPath}/Views/Rindex.jsp">首頁</a></li>
                 
                 <li><a href="${pageContext.request.contextPath}/Views/Bmodify.jsp">修改會員資料</a></li>
-                <li><a href="#" onClick="logout()">登出</a></li>
+                <li><a href="#" onClick="logout()">登出</a><p>|</p></li>
             
               </ul>
                
               
               <!--購物車-->
               <div class="shopping-cart">
-                <a href="Corder.html"><img src="${pageContext.request.contextPath}/img/shoopingcar-01.png" alt=""></a>
+                <a href="${pageContext.request.contextPath}/Views/Border.jsp"><img src="${pageContext.request.contextPath}/img/shoopingcar-01.png" alt=""></a>
               </div>
         
             </nav>   

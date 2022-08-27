@@ -355,4 +355,197 @@ public class HEAllModel {
 	    }
 		
 	}
+	
+	public List<HEOrderTitle> getBorderTitle(String userIdForSearch) {
+		Connection con = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		List<HEOrderTitle> orderTitleList = new ArrayList<HEOrderTitle>();
+		//JSONArray jarr = new JSONArray();
+		//String jsonStr = "";
+	    try {
+	    	int paramCount = 0; 
+	    	
+	      Class.forName(driver);
+	      con = DriverManager.getConnection(url, user, password);
+	      String sql = " SELECT A.*, B.USER_NAME, C.USER_NAME SHOP_NAME, D.USER_NAME SHIPPER_NAME,  "
+	      		+ "	CASE A.ORDER_STATUS "
+	      		+ "		WHEN '0' THEN '店家確認中' "
+	      		+ "		WHEN '1' THEN '製作中' "
+	      		+ "		WHEN '2' THEN '等待外送' "
+	      		+ "		WHEN '3' THEN '外送中' "
+	      		+ "		WHEN '4' THEN '已送達' "
+	      		+ "		WHEN '5' THEN '已結單' "
+	      		+ "		WHEN '6' THEN '訂單退回' "
+	      		+ "		ELSE A.ORDER_STATUS "
+	      		+ "		END ORDER_CSTATUS, "
+	      		+ "	CASE A.ORDER_TYPE "
+	      		+ "		WHEN '0' THEN '訂購' "
+	      		+ "		WHEN '1' THEN '已取消' "
+	      		+ "		ELSE A.ORDER_TYPE "
+	      		+ "		END ORDER_CTYPE "
+	      		+ "	FROM HE_ORDER_TITLE A "
+	      		+ "	JOIN HE_USERS B ON (A.USER_ID = B.USER_ID) "
+	      		+ "	JOIN HE_USERS C ON (A.SHOP_ID = C.USER_ID) "
+	      		+ "	LEFT JOIN HE_USERS D ON (A.SHIPPER_ID = D.USER_ID) "
+	      		+ "	WHERE A.USER_ID = ? ";
+	      /*if (notFinish.equals("1")) {*/
+	    	  sql += "AND A.ORDER_STATUS != '5' ";
+	    	  /*}*/
+	      sql += " AND A.ORDER_TYPE = '0' ORDER BY A.ORDER_ID DESC";
+	      stmt = con.prepareStatement(sql);
+	      stmt.setString(++paramCount, userIdForSearch);
+	      rs = stmt.executeQuery();//執行
+	      
+	      while(rs.next()){
+	    	int orderId = rs.getInt("ORDER_ID");
+	      	String userId = rs.getString("USER_ID");
+	      	String userName = rs.getString("USER_NAME");
+	      	String shopId = rs.getString("SHOP_ID");
+	      	String shopName = rs.getString("SHOP_NAME");
+	      	String shipDate = rs.getString("SHIP_DATE");
+	      	String shipAddress = rs.getString("SHIP_ADDRESS");
+	      	String shipPhone = rs.getString("SHIP_PHONE");
+	      	String crDate = rs.getString("CR_DATE");
+	      	String crUserId = rs.getString("CR_USER_ID");
+	      	String procDate = rs.getString("PROC_DATE");
+	      	String procUserId = rs.getString("PROC_USER_ID");
+	      	String orderStatus = rs.getString("ORDER_STATUS");
+	      	String orderCStatus = rs.getString("ORDER_CSTATUS");
+	      	String orderType = rs.getString("ORDER_TYPE");
+	      	String orderCType = rs.getString("ORDER_CTYPE");
+	      	String orderMemo = rs.getString("ORDER_MEMO");
+	      	int totalPrice = rs.getInt("TOTAL_PRICE");
+	      	String shipperId = rs.getString("SHIPPER_ID");
+	      	String shipperName = rs.getString("SHIPPER_NAME");
+	      	String shipperPhone = rs.getString("SHIPPER_PHONE");
+	      	
+	      	orderTitleList.add(new HEOrderTitle(orderId, shopId, shopName, userId, userName, shipDate, shipAddress, shipPhone, 
+	    			crDate, crUserId, procDate, procUserId, orderStatus, orderCStatus,
+	    			orderType, orderCType, orderMemo, totalPrice, shipperId, shipperName, shipperPhone));
+	      	//jarr.put(new JSONObject(new Drink(DRINK_ID, DRINK_NAME, DRINK_PRICE, DRINK_MEMO)));
+	      }
+	      //jsonStr = jarr.toString();
+	      if (orderTitleList.size() > 0) {
+	    	  return orderTitleList;
+	      }else {
+	    	  return null;
+	      }
+	      //return jsonStr;
+	    } catch (Exception ex) {
+	    	System.out.println(ex.getMessage());
+	      return null;
+	    	//return ex.getMessage();
+	    }
+		
+	}
+	
+	public List<HEOrderDtl> getBorderDtl(int orderIdForSearch) {
+		Connection con = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		List<HEOrderDtl> orderDtlList = new ArrayList<HEOrderDtl>();
+		//JSONArray jarr = new JSONArray();
+		//String jsonStr = "";
+	    try {
+	    	int paramCount = 0; 
+	    	
+	      Class.forName(driver);
+	      con = DriverManager.getConnection(url, user, password);
+	      String sql = " SELECT A.*, IFNULL(B.ITEM_NAME, A.ITEM_ID) ITEM_NAME, C.USER_NAME SHOP_NAME "
+	      		+ "	FROM HE_ORDER_DTL A  "
+	      		+ "	LEFT JOIN HE_ITEMS B ON (A.ITEM_ID = B.ITEM_ID) "
+	      		+ "	JOIN HE_USERS C ON (A.SHOP_ID = C.USER_ID) "
+	      		+ "	WHERE A.ORDER_ID = ? ORDER BY A.ORDERDTL_ID";
+
+	      stmt = con.prepareStatement(sql);
+	      stmt.setInt(++paramCount, orderIdForSearch);
+	      rs = stmt.executeQuery();//執行
+	      
+	      while(rs.next()){
+	    	int orderId = rs.getInt("ORDER_ID");
+	    	int orderDtlId = rs.getInt("ORDERDTL_ID");
+	    	String shopId = rs.getString("SHOP_ID");
+	    	String shopName = rs.getString("SHOP_NAME");
+	      	int itemId = rs.getInt("ITEM_ID");
+	      	String itemName = rs.getString("ITEM_NAME");
+	      	int num = rs.getInt("NUM");
+	      	String orderDtlMemo = rs.getString("ORDERDTL_MEMO");
+	      	int orderDtlPrice = rs.getInt("ORDERDTL_PRICE");
+	      	
+	      	orderDtlList.add(new HEOrderDtl(orderId, orderDtlId, shopId, shopName, itemId, itemName, num,
+	    			orderDtlMemo, orderDtlPrice));
+	      	//jarr.put(new JSONObject(new Drink(DRINK_ID, DRINK_NAME, DRINK_PRICE, DRINK_MEMO)));
+	      }
+	      //jsonStr = jarr.toString();
+	      if (orderDtlList.size() > 0) {
+	    	  return orderDtlList;
+	      }else {
+	    	  return null;
+	      }
+	      //return jsonStr;
+	    } catch (Exception ex) {
+	    	System.out.println(ex.getMessage());
+	      return null;
+	    	//return ex.getMessage();
+	    }
+	}
+	
+	public int updBorderTitle(String userId, int orderId) {
+		Connection con = null;
+		PreparedStatement stmt = null;
+		int rs = -1;
+		
+	    try {
+	    	int paramCount = 0; 
+	    	
+	      Class.forName(driver);
+	      con = DriverManager.getConnection(url, user, password);
+	      String sql = " UPDATE HE_ORDER_TITLE SET ORDER_TYPE = '1', PROC_DATE = NOW(), PROC_USER_ID = ? WHERE ORDER_ID = ? ";
+	      stmt = con.prepareStatement(sql);
+	      stmt.setString(++paramCount, userId);
+	      stmt.setInt(++paramCount, orderId);
+	      
+	      rs = stmt.executeUpdate();//執行
+	      
+	      return rs;
+	    } catch (Exception ex) {
+	    	System.out.println(ex.getMessage());
+	      return -1;
+	    }
+		
+	}
+	
+	public int updBmodifyUser(String userId, String passwd, String phone, String address) {
+		Connection con = null;
+		PreparedStatement stmt = null;
+		int rs = -1;
+		
+	    try {
+	    	int paramCount = 0; 
+	    	
+	      Class.forName(driver);
+	      con = DriverManager.getConnection(url, user, password);
+	      String sql = " UPDATE HE_USERS SET ";
+	      if (!passwd.trim().equals("")) {
+	    	  sql +=" PASSWD = ?, ";
+	      }
+	      sql += " PHONE = ?, ADDRESS = ? WHERE USER_ID = ? ";
+	      stmt = con.prepareStatement(sql);
+	      if (!passwd.trim().equals("")) {
+	    	  stmt.setString(++paramCount, passwd);
+	      }
+	      stmt.setString(++paramCount, phone);
+	      stmt.setString(++paramCount, address);
+	      stmt.setString(++paramCount, userId);
+	      
+	      rs = stmt.executeUpdate();//執行
+	      
+	      return rs;
+	    } catch (Exception ex) {
+	    	System.out.println(ex.getMessage());
+	      return -1;
+	    }
+		
+	}
 }

@@ -374,6 +374,7 @@
             <div class="col-lg-6 col-md-6" style="width: 40%; background-color: #FFF;">
             	
 					<label style="font-size: 21px;">訂單明細</label>
+					<br />
 					總價：<label id="totalPriceLB" style="color:red; font-size: 24px;"></label>元
 					<br/>
 					<div class="table-wrapper" style="height: 300px;overflow-y: auto;">

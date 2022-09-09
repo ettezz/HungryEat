@@ -48,17 +48,28 @@
                 url: url,
                 contentType: "application/x-www-form-urlencoded; charset=utf-8",
                 dataType : "json",
-                success: function(item){  
-                	var str = '<option  value="" data-memo="" data-price="0" data-img="" selected="selected">請選擇商品</option>';
-                	$.each(item, function (i, val){
-                		str += '<option value="' + val.itemId 
-                		+ '" data-memo="' + val.itemMemo 
-                		+ '" data-price="' + val.itemPrice 
-                		+ '" data-img="' + val.itemImgName 
-                		+ '">'
-                        + val.itemName + '</option>';
-                	});
+                success: function(item){
+                	var str = '';
+                	var selectedValue = ''; 
+                	if (item.length == 0){
+                		str = '<option  value="" data-memo="" data-price="0" data-img="" selected="selected">請選擇商品</option>';
+                	}else{
+                		$.each(item, function (i, val){
+                			if (i === 0){
+                				selectedValue = val.itemId;
+                			}
+                			str += '<option value="' + val.itemId 
+                    		+ '" data-memo="' + val.itemMemo 
+                    		+ '" data-price="' + val.itemPrice 
+                    		+ '" data-img="' + val.itemImgName 
+                    		+ '">'
+                            + val.itemName + '</option>';
+                    	});
+                	}
                 	$("#itemInfoSEL").append(str);
+                	
+                	$("#itemInfoSEL").val(selectedValue);
+                	itemInfoChange();
                 },
                 error:function(err){
                 	//alert(err);
@@ -321,20 +332,67 @@
     
 
     <div class="tm-main-section light-gray-bg">
-      <div class="container" style="max-width: 90%; min-width: 900px;" id="main">
+      <div class="container" style="max-width: 90%; min-width: 900px; width:70%;" id="main">
         <section class="tm-section row">
           <h2 class="col-lg-12 margin-bottom-30">填寫訂單</h2>
           <h3 class="col-lg-12 margin-bottom-30" id="shopName"></h3>
-          
-          <div style="float:right;">
-          	<button id="insBTN" class="buttonA" style="font-size: x-large; height: 45px;" onClick="insClick()" >訂購</button>
-          </div>
-          
-          <div style="clear: both;"></div>
-          
+        
           <!--表單-->
-          <div class="tm-contact-form">
-            <div class="col-lg-6 col-md-6" style="width: 40%;">
+          <div class="tm-contact-form" >
+            <div class="col-lg-6 col-md-6" style="width: 30%;">
+            
+             <div class="form-group">
+             	<select id="itemInfoSEL" style="width: 100%;" onchange="itemInfoChange()"></select>
+             </div>
+           	  <div class="tm-product" style="justify-content:normal;">
+                <img id="itemImg" src="" width='100' alt="店家尚未上傳圖片">
+                <div class="tm-product-text">
+                  <h3 class="tm-product-title" id="itemName"></h3>
+                  <div class="tm-product-price-currency ">
+                    <a href="#">NT.<span id="itemPrice">0</span></a>
+                  </div>
+                  <hr>
+                  <p class="tm-product-description" id="itemMemo"></p>
+                </div>
+              </div>
+              
+              <div class="form-group">
+	              <input type="text" id="itemMemoTXT" class="form-control" placeholder="商品備註" />
+	          </div>
+	          <div class="form-group">
+              數量：<select id="numSEL" ></select>個
+              <div style="float:right;">
+	         	<button class="buttonA" onClick="addClick()">添加</button> 
+	         </div>
+          
+          	<div style="clear: both;"></div>
+              
+              </div> 
+              
+            
+            </div>
+            <div class="col-lg-6 col-md-6" style="width: 40%; background-color: #FFF;">
+            	
+					<label style="font-size: 21px;">訂單明細</label>
+					<br />
+					總價：<label id="totalPriceLB" style="color:red; font-size: 24px;"></label>元
+					<br/>
+					<div class="table-wrapper" style="height: 300px;overflow-y: auto;">
+						<table id="orderDtlTB" style="width:100%">
+							<tr>
+								<th style="width: 10%;">序號</th>
+								<th style="width: 15%;">商品名稱</th>
+								<th style="width: 10%;">數量</th>
+								<th style="width: 15%;">金額</th>
+								<th>備註</th>
+								<th style="min-width: 100px;width: 120px;">　　</th>
+								<th style="display: none;">商品ID</th>
+							</tr>
+						</table>
+					</div>
+            </div>
+            <div class="col-lg-6 col-md-6" style="width: 30%;">
+            <!--建立訂單-->
               <!--電話-->
               <div class="form-group">
                 <input type="tel" id="phoneTXT" class="form-control" placeholder="電話" />
@@ -361,50 +419,12 @@
               <div class="form-group">
                 <textarea id="memoTXT" class="form-control" rows="6" placeholder="備註資訊"></textarea>
               </div>
-             
-             <div class="form-group">
-             	<select id="itemInfoSEL" onchange="itemInfoChange()"></select>
-             </div>
-             
-             <div class="tm-product" style="justify-content:normal;">
-                <img id="itemImg" src="" width='100' alt="店家尚未上傳圖片">
-                <div class="tm-product-text">
-                  <h3 class="tm-product-title" id="itemName"></h3>
-                  <div class="tm-product-price-currency ">
-                    <a href="#">NT.<span id="itemPrice">0</span></a>
-                  </div>
-                  <hr>
-                  <p class="tm-product-description" id="itemMemo"></p>
-                </div>
-              </div>
-              <!--建立訂單-->
-              <div class="form-group-sm">
-              數量：<select id="numSEL" ></select>個
-              <input type="text" id="itemMemoTXT" class="form-control" placeholder="商品備註" />
-                <button class="buttonA" onClick="addClick()">添加</button> 
-             
-              </div>    
-                      
-            </div>
-            <div class="col-lg-6 col-md-6" style="float: right; width: 60%;">
-            	<fieldset>
-					<legend>訂單明細</legend>
-					總價：<label id="totalPriceLB" style="color:red; font-size: 24px;"></label>元
-					<br/>
-					<div class="table-wrapper" style="height: 300px;overflow-y: auto;">
-						<table id="orderDtlTB" style="width:90%">
-							<tr>
-								<th style="width: 10%;">序號</th>
-								<th style="width: 15%;">商品名稱</th>
-								<th style="width: 10%;">數量</th>
-								<th style="width: 15%;">金額</th>
-								<th>備註</th>
-								<th style="min-width: 100px;">　　</th>
-								<th style="display: none;">商品ID</th>
-							</tr>
-						</table>
-					</div>
-				</fieldset>
+              
+           	 <div style="float:right;">
+	         	<button id="insBTN" class="buttonA" style="font-size: x-large; height: 45px;" onClick="insClick()" >訂購</button>
+	         </div>
+          
+          <div style="clear: both;"></div>
             </div>
           </div>
         </section>

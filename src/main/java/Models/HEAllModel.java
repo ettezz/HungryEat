@@ -683,4 +683,96 @@ public class HEAllModel {
 	    }
 		
 	}
+	
+	public int setAshipper(String isOwn, String shopId, String userId, String userName, String passwd, String phone, String address) {
+		Connection con = null;
+		PreparedStatement stmt = null;
+		int rs = -1;
+		
+	    try {
+	    	int paramCount = 0; 
+	    	
+	      Class.forName(driver);
+	      con = DriverManager.getConnection(url, user, password);
+	      String sql = "";
+	      
+	      if (isOwn.equals("1")) {
+	    	  sql += " UPDATE HE_USERS SET ";
+		      if (!passwd.trim().equals("")) {
+		    	  sql +=" PASSWD = ?, ";
+		      }
+		      sql += " PHONE = ?, ADDRESS = ? WHERE USER_ID = ? ";
+		      stmt = con.prepareStatement(sql);
+		      if (!passwd.trim().equals("")) {
+		    	  stmt.setString(++paramCount, passwd);
+		      }
+		      stmt.setString(++paramCount, phone);
+		      stmt.setString(++paramCount, address);
+		      stmt.setString(++paramCount, userId);
+	      } else {
+	    	  sql += " INSERT INTO HE_USERS (USER_ID, USER_NAME, PASSWD, PHONE, ADDRESS, ROLE_TYPE, BELONG_SHOP_ID) "
+			      		+ "		VALUES(?, ?, ?, ?, ?, 'C', ?) ";
+			      stmt = con.prepareStatement(sql);
+			      stmt.setString(++paramCount, userId);
+			      stmt.setString(++paramCount, userName);
+			      stmt.setString(++paramCount, passwd);
+			      stmt.setString(++paramCount, phone);
+			      stmt.setString(++paramCount, address);
+			      stmt.setString(++paramCount, shopId);
+	      }
+	      
+	      rs = stmt.executeUpdate();//執行
+	      
+	      return rs;
+	    } catch (Exception ex) {
+	    	System.out.println(ex.getMessage());
+	      return -1;
+	    }
+	    
+	}
+	
+	public List<HEUser> getAshipper(String shopId) {
+		Connection con = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		List<HEUser> shipperList = new ArrayList<HEUser>();
+		//JSONArray jarr = new JSONArray();
+		//String jsonStr = "";
+	    try {
+	    	int paramCount = 0; 
+	    	
+	      Class.forName(driver);
+	      con = DriverManager.getConnection(url, user, password);
+	      String sql = "SELECT USER_ID, USER_NAME, PHONE, ADDRESS, ROLE_TYPE, IMG_NAME, BELONG_SHOP_ID FROM HE_USERS WHERE BELONG_SHOP_ID = ? ";
+	      stmt = con.prepareStatement(sql);
+	      stmt.setString(++paramCount, shopId);
+
+	      rs = stmt.executeQuery();//執行
+	      
+	      while(rs.next()){
+	    	String userIdSele = rs.getString("USER_ID");
+	      	String userNameSele = rs.getString("USER_NAME");
+	      	String phoneSele = rs.getString("PHONE");
+	      	String addressSele = rs.getString("ADDRESS");
+	      	String roleTypeSele = rs.getString("ROLE_TYPE");
+	      	String imgNameSele = rs.getString("IMG_NAME");
+	      	String belongShopIdSele = rs.getString("BELONG_SHOP_ID") == null? "" : rs.getString("BELONG_SHOP_ID");
+		      	
+	      	
+	      	shipperList.add(new HEUser(userIdSele, userNameSele, phoneSele, addressSele, roleTypeSele, imgNameSele, belongShopIdSele));
+	      	//jarr.put(new JSONObject(new Drink(DRINK_ID, DRINK_NAME, DRINK_PRICE, DRINK_MEMO)));
+	      }
+	      //jsonStr = jarr.toString();
+	      if (shipperList.size() > 0) {
+	    	  return shipperList;
+	      }else {
+	    	  return null;
+	      }
+	      //return jsonStr;
+	    } catch (Exception ex) {
+	    	System.out.println(ex.getMessage());
+	      return null;
+	    	//return ex.getMessage();
+	    }
+	}
 }

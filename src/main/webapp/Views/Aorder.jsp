@@ -294,7 +294,7 @@
 	
 		<div class="container" id="main" style="max-width: 90%; min-width: 960px;">
 	        
-	      <h2 class="tm-section-header ">查詢訂單</h2>
+	      <h2 class="tm-section-header ">查看訂單</h2>
 	      <hr/>
 	           <!-- 表格-->
 		<div class="table-wrapper" style="height: 400px;">

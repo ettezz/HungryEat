@@ -26,10 +26,13 @@
 			out.println("<script type='text/javascript'>alert('歡迎 " + USER_NAME + " 登入');</script>");
 			if (ROLE_TYPE.equals("A")){
 				//跳轉網頁
-				out.println("<script type='text/javascript'>window.location.href='Views/AupProduct.jsp';</script>");
+				out.println("<script type='text/javascript'>window.location.href='Views/Aorder.jsp';</script>");
 			}else if (ROLE_TYPE.equals("B")){
 				//跳轉網頁
 				out.println("<script type='text/javascript'>window.location.href='Views/Rindex.jsp';</script>");
+			}else if (ROLE_TYPE.equals("C")){
+				//跳轉網頁
+				out.println("<script type='text/javascript'>window.location.href='Views/HEmenuBarC.jsp';</script>");
 			}
 			//out.println("<script type='text/javascript'>$('#resultModal').modal('show');</script>");
 		}

@@ -221,7 +221,7 @@
                                 <input type="text" name="itemName" >  
                                 <input type="hidden" name="shopId" value=<%= session.getAttribute("USER_ID")%>>
                                 <input type="hidden" name="funcType" value="0">
-                                <button type="submit" class="button">查詢飲品</button>
+                                <button type="submit" class="button">查詢商品</button>
                             </label>
                         </section>
                     </fieldset>

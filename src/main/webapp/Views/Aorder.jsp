@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>查詢訂單</title>
+  <title>查看訂單</title>
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,700' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Damion' rel='stylesheet' type='text/css'>
   <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
@@ -83,9 +83,9 @@
 	  	
 	  	//let chk = document.getElementById("notFinishCBX");
 			
-	  	var url = "${pageContext.request.contextPath}/BorderServlet?"
+	  	var url = "${pageContext.request.contextPath}/AorderServlet?"
 	  			+ "funcType=0" 
-	  			+ "&userId=" + "<%= session.getAttribute("USER_ID")%>"; 
+	  			+ "&shopId=" + "<%= session.getAttribute("USER_ID")%>"; 
 	  			//+ "&notFinish=" + (chk.checked ? "1" : "0");
 	  	
 	  	url=encodeURI(url);
@@ -105,7 +105,7 @@
 	             		val.orderId +
 	                  "</td>" +
 	                  "<td>" +
-	             		val.shopName +
+	             		val.userName +
 	                  "</td>" +
 	                  "<td style='color: red;'>" +
 	                  val.totalPrice +
@@ -124,11 +124,24 @@
 	                  "</td>" +
 	                  "<td style='color: blue;'>" +
 	                  val.orderCStatus +
+	                  "</td>";
+	                  if (val.orderType == '1'){
+	                	  str += "<td style='color: red;'>";
+		              } else {
+		            	  str += "<td>";
+		              }
+	                  str += val.orderCType +
 	                  "</td>" +
-	                  "<td>";
+	                  "<td style='text-align: center;'>";
 	                  
-	                  if (val.orderStatus != "5" && val.orderStatus != "6"){
-	                  	str += "<button style='color: white;' onclick='cancelClick(this)' >取消訂單</button>";
+	                  if (val.orderStatus != "5" && val.orderStatus != "6" && val.orderType != "1"){
+	                	let updStr = '';
+	                	switch (val.orderStatus){
+	                		case '0': updStr = '接受訂單'; break;
+	                		case '1': updStr = '製作完畢'; break;
+	                	}
+	                	str += (updStr != '' ? "<button style='color: white;' onclick='updClick(this," + (parseInt(val.orderStatus) + 1) + ")' >&nbsp;" + updStr + "</button>" : "");
+	                  	str += "<button style='color: white;' onclick='cancelClick(this)' >訂單退回</button>";
 	                  }
 	                  
 	                  str += "</td>" +
@@ -158,7 +171,7 @@
 	  	//$("#orderIdLB").text(orderId);
 	  	//$("#totalPriceLB").text($("#orderTitleTB")[0].rows[row].cells[2].innerHTML);
 	  	
-	  	var url = "${pageContext.request.contextPath}/BorderServlet?"
+	  	var url = "${pageContext.request.contextPath}/AorderServlet?"
 				+ "funcType=1" 
 				+ "&orderId=" + orderId;
 		
@@ -199,18 +212,57 @@
 	      	
 	  }
 	  
-	  //取消訂單
+	  //更新訂單狀態
+	  function updClick(obj, status) {
+	      if (!window.confirm('確定更新訂單狀態?')) {
+	          return false;
+	      }
+	      var row = obj.parentNode.parentNode.rowIndex;
+			console.log(status);
+	  	let orderId = $("#orderTitleTB")[0].rows[row].cells[1].innerHTML;
+	  	
+	  	var url = "${pageContext.request.contextPath}/AorderServlet?"
+				+ "funcType=2" 
+				+ "&shopId=" + "<%= session.getAttribute("USER_ID")%>"
+				+ "&orderId=" + orderId
+				+ "&status=" + status;
+		
+	  	url=encodeURI(url);
+	  	url=encodeURI(url); //兩次
+	  	$.ajax({
+	          type: "POST",
+	          url: url,
+	          contentType: "application/x-www-form-urlencoded; charset=utf-8",
+	          success: function(msg){      
+	          	if (msg == 1 || parseInt(msg) == 1){
+	              	alert("更新成功");
+	              	cleanClick();
+	              	//searchClick(); //重新查詢
+	              }else{
+	              	alert("更新失敗:" + msg);
+	              }
+	          },
+	          error:function(err){
+	          	alert(err);
+	          },
+	      });
+	  	
+	      /*var table = document.getElementById("orderTitleTB");
+	      table.deleteRow(row);*/
+	  }
+	  
+	//訂單退回
 	  function cancelClick(obj) {
-	      if (!window.confirm('確定取消訂單?')) {
+	      if (!window.confirm('確定退回訂單?')) {
 	          return false;
 	      }
 	      var row = obj.parentNode.parentNode.rowIndex;
 			
 	  	let orderId = $("#orderTitleTB")[0].rows[row].cells[1].innerHTML;
 	  	
-	  	var url = "${pageContext.request.contextPath}/BorderServlet?"
-				+ "funcType=2"
-				+ "&userId=" + "<%= session.getAttribute("USER_ID")%>"
+	  	var url = "${pageContext.request.contextPath}/AorderServlet?"
+				+ "funcType=3" 
+				+ "&shopId=" + "<%= session.getAttribute("USER_ID")%>"
 				+ "&orderId=" + orderId;
 		
 	  	url=encodeURI(url);
@@ -221,11 +273,11 @@
 	          contentType: "application/x-www-form-urlencoded; charset=utf-8",
 	          success: function(msg){      
 	          	if (msg == 1 || parseInt(msg) == 1){
-	              	alert("取消成功");
+	              	alert("訂單退回成功");
 	              	cleanClick();
 	              	//searchClick(); //重新查詢
 	              }else{
-	              	alert("取消失敗:" + msg);
+	              	alert("訂單退回失敗:" + msg);
 	              }
 	          },
 	          error:function(err){
@@ -233,15 +285,12 @@
 	          },
 	      });
 	  	
-	  	
 	      /*var table = document.getElementById("orderTitleTB");
 	      table.deleteRow(row);*/
-	  	
-	      
 	  }
   </script>
 <body>
-	<%@include file="/Views/HEmenuBarB.jsp" %>
+	<%@include file="/Views/HEmenuBarA.jsp" %>
 	
 		<div class="container" id="main" style="max-width: 90%; min-width: 960px;">
 	        
@@ -254,14 +303,15 @@
 	              <tr>
 	                  <th style="width: 100px;"></th>
 	                  <th>訂單編號</th>
-	                  <th>購買店家</th>
+	                  <th>顧客姓名</th>
 	                  <th>總價</th>
 	                  <th>送貨日期</th>
 	                  <th>送貨地址</th>
 	                  <th>連絡電話</th>
 	                  <th>備註</th>
+	                  <th>訂單類別</th>
 	                  <th>訂單狀態</th>
-	                  <th style="width: 100px;"></th>
+	                  <th style="width: 200px;"></th>
 	              </tr>
 	          </thead>
 	          

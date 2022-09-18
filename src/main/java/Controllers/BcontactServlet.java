@@ -105,6 +105,7 @@ public class BcontactServlet extends HttpServlet {
 		shipDate=shipDate.replaceAll("%20"," ");
 		shipAddress = java.net.URLDecoder.decode(shipAddress, "UTF-8");
 		orderMemo = java.net.URLDecoder.decode(orderMemo, "UTF-8");
+		orderDtlMemo = java.net.URLDecoder.decode(orderDtlMemo, "UTF-8");
 		
 		int result = new HEAllModel().insContactOrder(shopId, userId, shipDate, shipAddress, shipPhone, 
 				orderMemo, totalPrice, itemId, 

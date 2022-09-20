@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>查看訂單</title>
+  <title>未外送訂單</title>
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,700' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Damion' rel='stylesheet' type='text/css'>
   <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
@@ -83,7 +83,7 @@
 	  	
 	  	//let chk = document.getElementById("notFinishCBX");
 			
-	  	var url = "${pageContext.request.contextPath}/AorderServlet?"
+	  	var url = "${pageContext.request.contextPath}/RorderServlet?"
 	  			+ "funcType=0" 
 	  			+ "&shopId=" + "<%= session.getAttribute("USER_ID")%>"; 
 	  			//+ "&notFinish=" + (chk.checked ? "1" : "0");
@@ -252,49 +252,49 @@
 	  }
 	  
 	//訂單退回
-	  function cancelClick(obj) {
-	      if (!window.confirm('確定退回訂單?')) {
-	          return false;
-	      }
-	      var row = obj.parentNode.parentNode.rowIndex;
-			
-	  	let orderId = $("#orderTitleTB")[0].rows[row].cells[1].innerHTML;
-	  	
-	  	var url = "${pageContext.request.contextPath}/AorderServlet?"
-				+ "funcType=3" 
-				+ "&shopId=" + "<%= session.getAttribute("USER_ID")%>"
-				+ "&orderId=" + orderId;
+//	  function cancelClick(obj) {
+//	      if (!window.confirm('確定退回訂單?')) {
+//          return false;
+//	      }
+//	      var row = obj.parentNode.parentNode.rowIndex;
+//			
+//	  	let orderId = $("#orderTitleTB")[0].rows[row].cells[1].innerHTML;
+//	  	
+//	  	var url = "${pageContext.request.contextPath}/AorderServlet?"
+//				+ "funcType=3" 
+				/*+ "&shopId=" + */"<%= session.getAttribute("USER_ID")%>"
+//				+ "&orderId=" + orderId;
 		
-	  	url=encodeURI(url);
-	  	url=encodeURI(url); //兩次
-	  	$.ajax({
-	          type: "POST",
-	          url: url,
-	          contentType: "application/x-www-form-urlencoded; charset=utf-8",
-	          success: function(msg){      
-	          	if (msg == 1 || parseInt(msg) == 1){
-	              	alert("訂單退回成功");
-	              	cleanClick();
+//	  	url=encodeURI(url);
+//	  	url=encodeURI(url); //兩次
+//	  	$.ajax({
+//	          type: "POST",
+//	          url: url,
+//	          contentType: "application/x-www-form-urlencoded; charset=utf-8",
+//	          success: function(msg){      
+//	          	if (msg == 1 || parseInt(msg) == 1){
+//	              	alert("訂單退回成功");
+//	              	cleanClick();
 	              	//searchClick(); //重新查詢
-	              }else{
-	              	alert("訂單退回失敗:" + msg);
-	              }
-	          },
-	          error:function(err){
-	          	alert(err);
-	          },
-	      });
+//	              }else{
+//	              	alert("訂單退回失敗:" + msg);
+//	              }
+//	          },
+//	          error:function(err){
+//	          	alert(err);
+//	          },
+//	      });
 	  	
 	      /*var table = document.getElementById("orderTitleTB");
 	      table.deleteRow(row);*/
-	  }
+//	  }
   </script>
 <body>
-	<%@include file="/Views/HEmenuBarA.jsp" %>
+	<%@include file="/Views/HEmenuBarC.jsp" %>
 	
 		<div class="container" id="main" style="max-width: 90%; min-width: 960px;">
 	        
-	      <h2 class="tm-section-header ">查看訂單</h2>
+	      <h2 class="tm-section-header ">未外送訂單</h2>
 	      <hr/>
 	           <!-- 表格-->
 		<div class="table-wrapper" style="height: 400px;">

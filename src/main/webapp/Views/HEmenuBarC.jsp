@@ -64,7 +64,7 @@
 				  <!-- 選單-->
 				  <nav class="tm-nav">
 					<ul>
-                        <li><a href="${pageContext.request.contextPath}/Views/Corder.jsp">查看訂單</a></li>
+                        <li><a href="${pageContext.request.contextPath}/Views/Rorder.jsp">未外送訂單</a></li>
                         <li><a href="#" onClick="logout()">登出</a></li>
                     
                     </ul>

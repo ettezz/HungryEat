@@ -32,7 +32,7 @@
 				out.println("<script type='text/javascript'>window.location.href='Views/Rindex.jsp';</script>");
 			}else if (ROLE_TYPE.equals("C")){
 				//跳轉網頁
-				out.println("<script type='text/javascript'>window.location.href='Views/HEmenuBarC.jsp';</script>");
+				out.println("<script type='text/javascript'>window.location.href='Views/Rorder.jsp';</script>");
 			}
 			//out.println("<script type='text/javascript'>$('#resultModal').modal('show');</script>");
 		}

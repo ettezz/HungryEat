@@ -454,7 +454,7 @@ public class HEAllModel {
 	      con = DriverManager.getConnection(url, user, password);
 	      String sql = " SELECT A.*, IFNULL(B.ITEM_NAME, A.ITEM_ID) ITEM_NAME, C.USER_NAME SHOP_NAME "
 	      		+ "	FROM HE_ORDER_DTL A  "
-	      		+ "	LEFT JOIN HE_ITEMS B ON (A.ITEM_ID = B.ITEM_ID) "
+	      		+ "	LEFT JOIN HE_ITEMS B ON (A.ITEM_ID = B.ITEM_ID AND A.SHOP_ID = B.SHOP_ID) "
 	      		+ "	JOIN HE_USERS C ON (A.SHOP_ID = C.USER_ID) "
 	      		+ "	WHERE A.ORDER_ID = ? ORDER BY A.ORDERDTL_ID";
 

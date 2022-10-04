@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.jasper.tagplugins.jstl.core.Out;
+
 public class HEAllModel {
 	private String password = "fjusedia";//統一使用的變數
 	private String url = "jdbc:mysql://140.134.24.157:53306/HE";
@@ -296,7 +298,8 @@ public class HEAllModel {
 	    	String[] itemIdArr = itemId.split(";");
 	    	String[] numArr = num.split(";");
 	    	String[] orderDtlPriceArr = orderDtlPrice.split(";");
-	    	String[] orderDtlMemoArr = orderDtlMemo.split(";!");
+	    	String[] orderDtlMemoArr = orderDtlMemo.split(";!",-1);
+
 	    	
 	    	int paramCount = 0; 
 	    	
@@ -789,11 +792,15 @@ public class HEAllModel {
 			con = DriverManager.getConnection(url, user, password);
 			String sql = " SELECT A.*, B.USER_NAME, C.USER_NAME SHOP_NAME, D.USER_NAME SHIPPER_NAME,  "
 						+ "	CASE A.ORDER_STATUS "
-						+ "		WHEN '2' THEN '等待外送' "
-						+ "		WHEN '3' THEN '外送中' "
-						+ "		WHEN '4' THEN '已送達' "
-						+ "		ELSE A.ORDER_STATUS "
-						+ "		END ORDER_CSTATUS, "
+			      		+ "		WHEN '0' THEN '店家確認中' "
+			      		+ "		WHEN '1' THEN '製作中' "
+			      		+ "		WHEN '2' THEN '等待外送' "
+			      		+ "		WHEN '3' THEN '外送中' "
+			      		+ "		WHEN '4' THEN '已送達' "
+			      		+ "		WHEN '5' THEN '已結單' "
+			      		+ "		WHEN '6' THEN '訂單退回' "
+			      		+ "		ELSE A.ORDER_STATUS "
+			      		+ "		END ORDER_CSTATUS, "
 						+ "	CASE A.ORDER_TYPE "
 						+ "		WHEN '0' THEN '訂購' "
 						+ "		WHEN '1' THEN '已取消' "
@@ -803,9 +810,9 @@ public class HEAllModel {
 						+ "	JOIN HE_USERS B ON (A.USER_ID = B.USER_ID) "
 						+ "	JOIN HE_USERS C ON (A.SHOP_ID = C.USER_ID) "
 						+ "	LEFT JOIN HE_USERS D ON (A.SHIPPER_ID = D.USER_ID) "
-						+ " Left JOIN HE_USERS E ON (A.SHOP_ID = E.BELONG_SHOP_ID and E.USER_ID = ?) "
+						+ " JOIN HE_USERS E ON (A.SHOP_ID = E.BELONG_SHOP_ID and E.USER_ID = ?) "
 						+ "	WHERE  "
-						+ " A.ORDER_STATUS = '2' "
+						+ " A.ORDER_STATUS IN ('2','3','4') "
 						+ " ORDER BY A.ORDER_ID DESC ";
 
 			stmt = con.prepareStatement(sql);

@@ -137,19 +137,18 @@
 	                  if (val.orderStatus != "5" && val.orderStatus != "6" && val.orderType != "1"){
 	                	let updStr = '';
 	                	switch (val.orderStatus){
-	                		case '0': updStr = '接受訂單'; break;
-	                		case '1': updStr = '製作完畢'; break;
+	                		case '2': updStr = '接收訂單'; break;
+	                		case '3': updStr = '送達訂單'; break;
+	                		case '4': updStr = '完成外送'; break;
 	                	}
-	                	str += (updStr != '' ? "<button style='color: white;' onclick='updClick(this," + (parseInt(val.orderStatus) + 1) + ")' >&nbsp;" + updStr + "</button>" : "");
-	                  	str += " <button style='color: white;' onclick='cancelClick(this)' >訂單退回</button>";
+	                	str += (updStr != '' ? " <button style='color: white;' onclick='takeOrder(this," + (parseInt(val.orderStatus) + 1) + ")' >" + updStr + "</button>" : "");
 	                  }
-	                  
+
 	                  str += "</td>" +
 	                  "</tr>";
-	                  
-	                  
-	                  
+
 	          	});
+	              
 	          	$("#orderTitleTB").append(str);
 	          },
 	          error:function(err){
@@ -212,16 +211,16 @@
 	      	
 	  }
 	  
-	  //更新訂單狀態
-	  function updClick(obj, status) {
-	      if (!window.confirm('確定更新訂單狀態?')) {
+	  //接收訂單-更新訂單狀態
+	  function takeOrder(obj, status) {
+	      if (!window.confirm('確定接收訂單?')) {
 	          return false;
 	      }
 	      var row = obj.parentNode.parentNode.rowIndex;
 			console.log(status);
 	  	let orderId = $("#orderTitleTB")[0].rows[row].cells[1].innerHTML;
 	  	
-	  	var url = "${pageContext.request.contextPath}/AorderServlet?"
+	  	var url = "${pageContext.request.contextPath}/RorderServlet?"
 				+ "funcType=2" 
 				+ "&shopId=" + "<%= session.getAttribute("USER_ID")%>"
 				+ "&orderId=" + orderId
@@ -238,9 +237,10 @@
 	              	alert("更新成功");
 	              	cleanClick();
 	              	//searchClick(); //重新查詢
-	              }else{
+	            }else{
 	              	alert("更新失敗:" + msg);
-	              }
+	            }
+	          	
 	          },
 	          error:function(err){
 	          	alert(err);
@@ -252,7 +252,7 @@
 	  }
 	  
 	//訂單退回
-//	  function cancelClick(obj) {
+//	  function takeOrder(obj) {
 //	      if (!window.confirm('確定退回訂單?')) {
 //          return false;
 //	      }

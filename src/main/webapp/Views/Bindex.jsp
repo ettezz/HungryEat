@@ -45,9 +45,9 @@
                 		str += "<div class='tm-popular-item' onclick='openShopClick(\"" + val.userId + "\")'>";
                 		console.log(val.imageName);
                 		if (val.imageName == ""){
-                			str+=  "   <img src='${pageContext.request.contextPath}/upload/noName.jpg' alt='店家尚未上傳' width='300' class='tm-popular-item-img'>";
+                			str+=  "   <img src='${pageContext.request.contextPath}/upload/noName.jpg' alt='店家尚未上傳' width='272' class='tm-popular-item-img'>";
                 		}else{
-                			str+=  "   <img src='${pageContext.request.contextPath}/upload/" + val.imageName + "' alt='店家尚未上傳' width='300' class='tm-popular-item-img'>";                    	    	
+                			str+=  "   <img src='${pageContext.request.contextPath}/upload/" + val.imageName + "' alt='店家尚未上傳' width='272' class='tm-popular-item-img'>";                    	    	
                 		}
                 		str+=  "   <div class='tm-popular-item-description'>" + 
                 	           "     <h3 class='tm-popular-item-title'>" + val.userName + "</h3>" + 

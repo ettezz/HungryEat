@@ -194,10 +194,6 @@
 					<img src="${pageContext.request.contextPath}/img/logo.png" alt="Logo" class="tm-site-logo">
 				  
 				  </div>
-				    <!-- rwd選單 -->
-		            <div class="mobile-menu-icon">
-		              <i class="m-bars"></i>
-		            </div>
 				  
 				  <!-- 選單-->
 				  <nav class="tm-nav">

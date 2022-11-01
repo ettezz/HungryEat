@@ -53,7 +53,7 @@
 				else{
 		%>
 		<!-- NAV-->
-		<div class="tm-top-header">
+		<div class="tm-top-header  navbar-fixed-top">
       <div class="container">
         <div class="row">
           <div class="tm-top-header-inner">
@@ -61,6 +61,13 @@
               <img src="${pageContext.request.contextPath}/img/logo.png" alt="Logo" class="tm-site-logo">
              <!--<h1 class="tm-site-name tm-handwriting-font">Cafe House</h1>--> 
             </div>
+            
+            
+            <!-- rwd選單 -->
+		            <div class="mobile-menu-icon">
+		              <i class="m-bars"></i>
+		            </div>
+ 
             
             <!-- 選單-->
             <nav class="tm-nav">

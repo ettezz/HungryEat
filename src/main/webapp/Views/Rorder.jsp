@@ -32,6 +32,79 @@
 	    border-radius:10px;
 	      
 	  }
+	  
+	  <!-- Bootstrap -->
+		<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+		
+		<style type="text/css">
+			.rwd-table {
+		 	 background: #fff;
+		 	 overflow: hidden;
+			}
+
+			.rwd-table tr:nth-of-type(2n){
+			  background: #eee;
+			}
+			.rwd-table th, 
+			.rwd-table td {
+			  margin: 0.5em 1em;
+			}
+			.rwd-table {
+			  min-width: 100%;
+			}
+
+			.rwd-table th {
+			  display: none;
+			}
+
+			.rwd-table td {
+			  display: block;
+			}
+
+			.rwd-table td:before {
+			  content: attr(data-th) "  ";
+			  font-weight: bold;
+			  width: 6.5em;
+			  display: inline-block;
+			}
+
+			.rwd-table th, .rwd-table td {
+			  text-align: left;
+			}
+
+			.rwd-table th, .rwd-table td:before {
+			  color: #000000;
+			  font-weight: bold;
+			}
+
+			@media (min-width: 480px) {
+			  .rwd-table td:before {
+			    display: none;
+			  }
+			 .rwd-table th, .rwd-table td {
+			    display: table-cell;
+			    padding: 0.25em 0.5em;
+			  }
+			  .rwd-table th:first-child, 
+			  .rwd-table td:first-child {
+			    padding-left: 0;
+			  }
+			  .rwd-table th:last-child, 
+			  .rwd-table td:last-child {
+			    padding-right: 0;
+			  }
+			   .rwd-table th, 
+			   .rwd-table td {
+			    padding: 1em !important;
+			  }
+			}
+		</style>
+	<style type="text/css">@font-face {
+  font-family: 'rbicon';
+  src: url(chrome-extension://dipiagiiohfljcicegpgffpbnjmgjcnf/fonts/rbicon.woff2) format("woff2");
+  font-weight: normal;
+  font-style: normal; }
+	  
 	</style>	
   </head>
   <script type="text/javascript">
@@ -98,31 +171,29 @@
 	              let str = "";
 	              $.each(orderTitles, function (i, val){
 	          		str += "<tr>" +
-	             		"<td>" +
-	             		"<button style='color: white;' onclick='searchDtlClick(this)' >查看明細</button>" +
-	                  "</td>" +
-	                  "<td>" +
+	             		
+	                  "<td data-th=\"訂單編號:\">" +
 	             		val.orderId +
 	                  "</td>" +
-	                  "<td>" +
+	                  "<td data-th=\"顧客姓名:\">" +
 	             		val.userName +
 	                  "</td>" +
-	                  "<td style='color: red;'>" +
+	                  "<td style='color: red;' data-th=\"總價:\">" +
 	                  val.totalPrice +
 	                  "</td>" +
-	                  "<td>" +
+	                  "<td data-th=\"送貨日期\">" +
 	                  val.shipDate +
 	                  "</td>" +
-	                  "<td>" +
+	                  "<td data-th=\"送貨地址\">" +
 	                  val.shipAddress +
 	                  "</td>" +
-	                  "<td>" +
+	                  "<td data-th=\"連絡電話:\">" +
 	                  val.shipPhone +
 	                  "</td>" +
-	                  "<td>" +
+	                  "<td data-th=\"備註:\">" +
 	                  val.orderMemo +
 	                  "</td>" +
-	                  "<td style='color: blue;'>" +
+	                  "<td style='color: blue;' data-th=\"訂單類別:\">" +
 	                  val.orderCStatus +
 	                  "</td>";
 	                  if (val.orderType == '1'){
@@ -145,6 +216,9 @@
 	                  }
 
 	                  str += "</td>" +
+	                  "<td data-th=\"查看明細:\">" +
+	             		"<button style='color: white;' onclick='searchDtlClick(this)' >查看明細</button>" +
+	                  "</td>" +
 	                  "</tr>";
 
 	          	});
@@ -184,22 +258,22 @@
 	              let str = "";
 	              $.each(orderDtls, function (i, val){
 	          		str += "<tr>" +
-	             		"<td>" +
-	             		val.orderDtlId +
-	                  "</td>" +
-	                  "<td>" +
-	                  val.itemName +
-	                  "</td>" +
-	                  "<td>" +
-	                  val.num +
-	                  "</td>" +
-	                  "<td>" +
-	                  val.orderDtlPrice +
-	                  "</td>" +
-	                  "<td>" +
-	                  val.orderDtlMemo +
-	                  "</td>" +
-	                  "</tr>";
+	             		   "<td data-th=\"序號:\">" +
+	             		    val.orderDtlId +
+		                  "</td>" +
+		                  "<td data-th=\"商品名稱:\">" +
+		                  val.itemName +
+		                  "</td>" +
+		                  "<td data-th=\"數量:\">" +
+		                  val.num +
+		                  "</td>" +
+		                  "<td data-th=\"金額:\">" +
+		                  val.orderDtlPrice +
+		                  "</td>" +
+		                  "<td data-th=\"商品備註:\">" +
+		                  val.orderDtlMemo +
+		                  "</td>" +
+		                  "</tr>";
 	                  
 	          	});
 	          	$("#orderDtlTB").append(str);
@@ -296,12 +370,15 @@
 	        
 	      <h2 class="tm-section-header ">未外送訂單</h2>
 	      <hr/>
-	           <!-- 表格-->
+	      
+	       <h2 class="tm-section-header ">查詢訂單</h2>
+	       
+   	     <!-- 表格-->
 		<div class="table-wrapper" style="height: 400px;">
-	      <table id="orderTitleTB" class="display dataTable no-footer" style="width:100%">
+	      <table id="orderTitleTB" class="rwd-table" >
 	          <thead>
 	              <tr>
-	                  <th style="width: 100px;"></th>
+	                  
 	                  <th>訂單編號</th>
 	                  <th>顧客姓名</th>
 	                  <th>總價</th>
@@ -311,14 +388,15 @@
 	                  <th>備註</th>
 	                  <th>訂單類別</th>
 	                  <th>訂單狀態</th>
-	                  <th style="width: 200px;"></th>
+	                  <th></th>
+	                  
 	              </tr>
 	          </thead>
 	          
 	          
 	     
 	      </table>
-	
+	   
 		</div>
 	      <h2 class="tm-section-header ">訂單明細</h2>
 	      <hr/>
@@ -339,6 +417,7 @@
 		
 	 	</div>
     
-    
+	      
+	    
 </body>
 </html>

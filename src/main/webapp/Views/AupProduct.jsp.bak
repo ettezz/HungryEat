@@ -299,7 +299,7 @@
                     <section>     
                         <label class="textarea">
                             <span>商品敘述：</span>
-                            <textarea id="itemMemoUpd" rows="5"  ></textarea>
+                            <textarea id="itemMemoUpd" rows="5" style="width: 460px;" ></textarea>
                         </label>
                     </section>
                     <section>

@@ -40,10 +40,9 @@ COLOR CODES
 }
 
 .buttonA {
+  /*
 	position: relative;
-	/*display: block;*/
 	
-	/*float: right;*/
 	height: 39px;
 	overflow: hidden;
 	margin: 10px 0 0 20px;
@@ -66,6 +65,16 @@ COLOR CODES
 	
 	 width: 45%;
   	height: 30%;
+  */
+
+    
+    color: white;
+    border-radius: 10px;
+    background-color: #D89235;
+    border:none;
+    width: 90px;
+    height: 30px;
+    
 }
 
 .buttonA:hover {
@@ -395,7 +404,7 @@ ul {
 
 /* Main content */
 .light-gray-bg { background-color: #e4e4e4; }
-.tm-main-section { padding-top: 50px; }
+.tm-main-section { padding-top: 100px; }
 .img-thumbnail { padding: 8px; }
 .inline-block { display: inline-block; }
 .shadow-img {
@@ -458,7 +467,7 @@ ul {
 .tm-popular-item {
   background: url(../img/popular-item-bg.png) no-repeat;
   background-size: 100% 100%;
-  max-width: 294px;
+  max-width: 280px;
   margin-top: 30px;  
   margin-bottom: 80px;
   width: 100%;
@@ -679,7 +688,9 @@ ol li:before {
   background-color: white;
   padding: 20px;
 }
-.tm-product-text { max-width: 420px; }
+.tm-product-text {
+  margin-top: 20px;
+  max-width: 420px; }
 
 .tm-product-title {
   margin-top: 0;
@@ -704,6 +715,8 @@ ol li:before {
   color: rgb(174,174,174);
 }
 .tm-product {
+  display: flex;
+  flex-direction: column;
   cursor: pointer;
   margin-bottom: 20px;
 }
@@ -744,10 +757,21 @@ button.tm-more-button {
   .div-inner{
     flex-wrap: wrap;
   }
+  /*
   .buttonA{
     width: 45%;
   }
-
+  */
+  .buttonA{
+  border-radius: 10px;
+	background-color: #D89235;
+	opacity: 0.8;
+	transition: opacity 0.2s;
+	-o-transition: opacity 0.2s;
+	-ms-transition: opacity 0.2s;
+	-moz-transition: opacity 0.2s;
+	-webkit-transition: opacity 0.2s;
+  }
   .tm-welcome-content { margin-bottom: 250px; }
   .tm-main-section { padding-top: 200px; }
   .light { 
@@ -781,14 +805,25 @@ button.tm-more-button {
 	  -ms-transform: translate(-50%, -20%);
 	  transform: translate(-50%, -20%);
   }
-
+/*
   .buttonA{
    
     width: 80%;
     height: 40%;
     font-size:5vw;
   }
-  
+ */
+ .buttonA{
+  outline:none;
+  border-radius: 10px;
+	background-color: #D89235;
+	opacity: 0.8;
+	transition: opacity 0.2s;
+	-o-transition: opacity 0.2s;
+	-ms-transition: opacity 0.2s;
+	-moz-transition: opacity 0.2s;
+	-webkit-transition: opacity 0.2s;
+  } 
   .tm-logo-container { margin-left: 25px; }  
   .mobile-menu-icon {
     display: block;

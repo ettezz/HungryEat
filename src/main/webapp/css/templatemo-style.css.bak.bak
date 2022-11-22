@@ -813,6 +813,9 @@ button.tm-more-button {
     top: 69px;
     right: 0px;
     background-color: rgba(0,0,0,0.7);
+    text-align: center;
+    line-height: 30px;
+    width: 20vw;
   }
   .tm-nav li { float: none; 
     

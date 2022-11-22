@@ -345,7 +345,7 @@
              	<select id="itemInfoSEL" style="width: 100%;" onchange="itemInfoChange()"></select>
              </div>
            	  <div class="tm-product" style="justify-content:normal;">
-                <img id="itemImg" src="" width='100' alt="店家尚未上傳圖片">
+                <img id="itemImg" src="" width='200' alt="店家尚未上傳圖片">
                 <div class="tm-product-text">
                   <h3 class="tm-product-title" id="itemName"></h3>
                   <div class="tm-product-price-currency ">
@@ -421,7 +421,7 @@
               </div>
               
            	 <div style="float:right;">
-	         	<button id="insBTN" class="buttonA" style="font-size: x-large; height: 45px;" onClick="insClick()" >訂購</button>
+	         	<button class="buttonA"  onClick="insClick()" >訂購</button>
 	         </div>
           
           <div style="clear: both;"></div>

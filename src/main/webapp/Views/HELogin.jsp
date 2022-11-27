@@ -75,7 +75,7 @@
 		-->
 	</head>
                        
-                        }
+                        
                         
 
 	<body class="bg-cyan">

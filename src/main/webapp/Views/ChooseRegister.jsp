@@ -75,9 +75,9 @@
 		<div class="divforCenter">		
 			<div class="div-inner">
 				
-				<button class="buttonA" style="display:inline; float:inherit;" onClick="BClick()">我是顧客</button>
+				<button class="buttonC" style="display:inline; float:inherit;" onClick="BClick()">我是顧客</button>
 				&nbsp;&nbsp;
-				<button class="buttonA" style="display:inline; float:inherit;" onClick="AClick()">我是店家</button>
+				<button class="buttonC" style="display:inline; float:inherit;" onClick="AClick()">我是店家</button>
 				
 			
 			</div>

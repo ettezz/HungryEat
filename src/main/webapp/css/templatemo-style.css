@@ -81,6 +81,48 @@ COLOR CODES
 	opacity: 1;
 }
 
+.buttonC {
+  /*
+	position: relative;
+	
+	height: 39px;
+	overflow: hidden;
+	margin: 10px 0 0 20px;
+	padding: 0 25px;
+	outline: none;
+	border: 0;
+	font: 300 15px/39px 'Open Sans', Helvetica, Arial, sans-serif;
+	text-decoration: none;
+	color: #fff;
+	cursor: pointer;
+	
+	border-radius: 10px;
+	background-color: #D89235;
+	opacity: 0.8;
+	transition: opacity 0.2s;
+	-o-transition: opacity 0.2s;
+	-ms-transition: opacity 0.2s;
+	-moz-transition: opacity 0.2s;
+	-webkit-transition: opacity 0.2s;
+	
+	 width: 45%;
+  	height: 30%;
+  */
+
+    
+    color: white;
+    border-radius: 10px;
+    background-color: #D89235;
+    border:none;
+    width: 150px;
+    height: 60px;
+    font-size: 24px;
+}
+
+.buttonC:hover {
+	opacity: 1;
+}
+
 
 .m-bars{
   align-items: center;
@@ -919,3 +961,4 @@ button.tm-more-button {
 	height: 200px; 
   	overflow-y: auto; 
 }
+

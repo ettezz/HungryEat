@@ -240,7 +240,7 @@
 	  	
 	  	var row = obj.parentNode.parentNode.rowIndex;
 	  		
-	  	let orderId = $("#orderTitleTB")[0].rows[row].cells[1].innerHTML;
+	  	let orderId = $("#orderTitleTB")[0].rows[row].cells[0].innerHTML;
 	  	//$("#orderIdLB").text(orderId);
 	  	//$("#totalPriceLB").text($("#orderTitleTB")[0].rows[row].cells[2].innerHTML);
 	  	
@@ -292,7 +292,7 @@
 	      }
 	      var row = obj.parentNode.parentNode.rowIndex;
 			console.log(status);
-	  	let orderId = $("#orderTitleTB")[0].rows[row].cells[1].innerHTML;
+	  	let orderId = $("#orderTitleTB")[0].rows[row].cells[0].innerHTML;
 	  	
 	  	var url = "${pageContext.request.contextPath}/RorderServlet?"
 				+ "funcType=2" 

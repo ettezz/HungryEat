@@ -16,9 +16,9 @@
 	<!-- JS -->
    <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.2.min.js"></script>      <!-- jQuery -->
    <script type="text/javascript" src="${pageContext.request.contextPath}/js/templatemo-script.js"></script>      <!-- Templatemo Script -->
-
+   <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>      
+   
  
-
   </head>
   <script type="text/javascript">
   		var shopId = "";
@@ -48,28 +48,25 @@
                 url: url,
                 contentType: "application/x-www-form-urlencoded; charset=utf-8",
                 dataType : "json",
-                success: function(item){
-                	var str = '';
-                	var selectedValue = ''; 
-                	if (item.length == 0){
-                		str = '<option  value="" data-memo="" data-price="0" data-img="" selected="selected">請選擇商品</option>';
-                	}else{
-                		$.each(item, function (i, val){
-                			if (i === 0){
-                				selectedValue = val.itemId;
-                			}
-                			str += '<option value="' + val.itemId 
-                    		+ '" data-memo="' + val.itemMemo 
-                    		+ '" data-price="' + val.itemPrice 
-                    		+ '" data-img="' + val.itemImgName 
-                    		+ '">'
-                            + val.itemName + '</option>';
-                    	});
-                	}
-                	$("#itemInfoSEL").append(str);
-                	
-                	$("#itemInfoSEL").val(selectedValue);
-                	itemInfoChange();
+                success: function(itemList){   
+                	let str = "";
+                    $.each(itemList, function (i, val){
+                		str += "<div class='tm-popular-item'>";
+                		if (val.itemImgName == ""){
+                			str+=  "   <img src='${pageContext.request.contextPath}/upload/noName.jpg' alt='店家尚未上傳' width='272' class='tm-popular-item-img'>";
+                		}else{
+                			str+=  "   <img src='${pageContext.request.contextPath}/upload/" + val.itemImgName + "' alt='店家尚未上傳' width='272' class='tm-popular-item-img'>";                    	    	
+                		}
+                		str+=  "   <div class='tm-popular-item-description'>" + 
+                	           "     <h3 class='tm-popular-item-title' style='color: #151515;'>" + val.itemName + "<label style='color: red;'>  $" + val.itemPrice + "</label></h3>" + 
+                	           "       <hr class='tm-popular-item-hr'>" + 
+                	           "       <p>" + val.itemMemo + "</p>" + 
+                	           "       <img src='${pageContext.request.contextPath}/img/plus.png' width='50' class='tm-popular-item-img' style='float: right; mix-blend-mode: multiply;' onclick='openModolClick(\"" + val.itemId + "\",\"" + val.itemName + "\",\"" + val.itemPrice + "\")'>" +
+                	            "  </div>" +           
+                	            "</div>";
+                        
+                	});
+                	$("#showItemDIV").append(str);
                 },
                 error:function(err){
                 	//alert(err);
@@ -94,7 +91,7 @@
         	$("#timeXT").val("");
         	$("#memoTXT").val("");
         	$("#itemInfoSEL").val("");
-        	itemInfoChange();
+        	//itemInfoChange();
         	$("#numSEL").val("1");
         	$("#itemMemoTXT").val("");
         	
@@ -213,11 +210,11 @@
         	tag++;
         	
         	let cancelBtnID = "cancelBtn" + tag;
-        	let itemId = $("#itemInfoSEL option:selected").val();
-        	let itemName = $("#itemInfoSEL option:selected").text();
-        	let itemPrice = $("#itemInfoSEL option:selected").data('price');
+        	let itemId = $("#itemIdHiddenLB").text();
+        	let itemName = $("#resultModalTitleLB").text();
+        	let itemPrice = $("#itemPriceHiddenLB").text();
         	let itemMemo = $("#itemMemoTXT").val();
-        	let money = (parseInt(itemPrice, 10) *  parseInt($("#numSEL").val(), 10));
+        	let money = (parseInt(itemPrice, 10) *  parseInt($("#numSEL option:selected").val(), 10));
         	
             $('#orderDtlTB').append("<tr>" +
            		"<td>" +
@@ -227,7 +224,7 @@
                 itemName +
                 "</td>" +
                 "<td>" +
-                $("#numSEL").val() +
+                $("#numSEL option:selected").val() +
                 "</td>" +
                 "<td>" +
                 money +
@@ -236,7 +233,7 @@
                 itemMemo +
                 "</td>" +
                 "<td>" +
-                "<button id=" + cancelBtnID + " class='buttonA' onclick='cancelClick(this)'>取消</button>" +
+                "<button id=" + cancelBtnID + " class='buttonA' style='margin: 5px;' onclick='cancelClick(this)'>取消</button>" +
                 "</td>" +
                 "<td style='display: none;'>" +
                 itemId +
@@ -276,7 +273,7 @@
             
         }
       
-        function itemInfoChange(){
+        /*function itemInfoChange(){
         	//console.log($("#itemInfoSEL option:selected").data('price'));
         	let itemName = $("#itemInfoSEL option:selected").text();
         	let itemPrice = $("#itemInfoSEL option:selected").data('price');
@@ -286,6 +283,16 @@
         	$("#itemPrice").text(itemPrice);
         	$("#itemImg").attr("src", itemImg);
         	$("#itemMemo").text(itemMemo);
+        }*/
+        
+        function openModolClick(itemId, itemName, itemPrice){
+        	$("#resultModalTitleLB").text(itemName);
+        	$("#itemIdHiddenLB").text(itemId);
+        	$("#itemPriceHiddenLB").text(itemPrice);
+        	$("#numSEL").val("1");
+        	$("#itemMemoTXT").val("");
+        	
+        	new bootstrap.Modal(document.getElementById('resultModal'), {}).show();
         }
         
         /* Google map
@@ -326,52 +333,32 @@
         });*/
         
 	</script>
-  <body>
+  <body class="light-gray-bg">
 
     <%@include file="/Views/HEmenuBarB.jsp" %>
     
 
     <div class="tm-main-section light-gray-bg">
-      <div class="container" style="max-width: 90%; min-width: 900px; width:70%;" id="main">
-        <section class="tm-section row">
+      <div class="container" style="max-width: 90%; min-width: 900px; width:90%; " id="main">
+        <section class="tm-section row" style="height: 100%; width: 100%;">
           <h2 class="col-lg-12 margin-bottom-30">填寫訂單</h2>
           <h3 class="col-lg-12 margin-bottom-30" id="shopName"></h3>
         
           <!--表單-->
-          <div class="tm-contact-form" >
-            <div class="col-lg-6 col-md-6" style="width: 30%;">
+          <div class="tm-contact-form" style="height: 100%; width: 100%;">
+            <div class="col-lg-6 col-md-6" style="width: 70%; max-width: 70%; height: 650px; overflow-y: auto;">
             
-             <div class="form-group">
-             	<select id="itemInfoSEL" style="width: 100%;" onchange="itemInfoChange()"></select>
-             </div>
-           	  <div class="tm-product" style="justify-content:normal;">
-                <img id="itemImg" src="" width='200' alt="店家尚未上傳圖片">
-                <div class="tm-product-text">
-                  <h3 class="tm-product-title" id="itemName"></h3>
-                  <div class="tm-product-price-currency ">
-                    <a href="#">NT.<span id="itemPrice">0</span></a>
-                  </div>
-                  <hr>
-                  <p class="tm-product-description" id="itemMemo"></p>
-                </div>
-              </div>
+             	<!-- 照片選單-->      
+		        <section class="tm-section tm-section-margin-bottom-0 row">
+		          <!--並排-->
+		          <div class="col-lg-12 tm-popular-items-container" id="showItemDIV">
+	              </div>
+	            </section>
               
-              <div class="form-group">
-	              <input type="text" id="itemMemoTXT" class="form-control" placeholder="商品備註" />
-	          </div>
-	          <div class="form-group">
-              數量：<select id="numSEL" ></select>個
-              <div style="float:right;">
-	         	<button class="buttonA" onClick="addClick()">添加</button> 
-	         </div>
-          
-          	<div style="clear: both;"></div>
-              
-              </div> 
+            </div> 
               
             
-            </div>
-            <div class="col-lg-6 col-md-6" style="width: 40%; background-color: #FFF;">
+            <div class="col-lg-6 col-md-6" style="width: 30%; background-color: #FFF;">
             	
 					<label style="font-size: 21px;">訂單明細</label>
 					<br />
@@ -390,46 +377,70 @@
 							</tr>
 						</table>
 					</div>
-            </div>
-            <div class="col-lg-6 col-md-6" style="width: 30%;">
-            <!--建立訂單-->
-              <!--電話-->
-              <div class="form-group">
-                <input type="tel" id="phoneTXT" class="form-control" placeholder="電話" />
-              </div>
-              <!--地址-->
-               <div class="form-group">
-                <input type="text" id="addressTXT" class="form-control" placeholder="地址" />
-              </div>
-               <!--送貨日期-->
-              <div class="form-group">
-                <input type="date" id="dateTXT" name="appt" class="form-control"
-                 required>
-              </div>
-
-              <!--送貨時間-->
-              <div class="form-group">
-                
-                <input type="time" id="timeTXT" name="appt" class="form-control"
-                min="09:00" max="22:00" required>
-                <!--<small>上午9點至晚上10點</small>-->
-              </div>
-
-               <!--備註-->
-              <div class="form-group">
-                <textarea id="memoTXT" class="form-control" rows="6" placeholder="備註資訊"></textarea>
-              </div>
-              
-           	 <div style="float:right;">
-	         	<button class="buttonA"  onClick="insClick()" >訂購</button>
-	         </div>
-          
-          <div style="clear: both;"></div>
+					<br/>
+					<!--建立訂單-->
+		              <!--電話-->
+		              <div class="form-group">
+		                <input type="tel" id="phoneTXT" class="form-control" placeholder="電話" />
+		              </div>
+		              <!--地址-->
+		               <div class="form-group">
+		                <input type="text" id="addressTXT" class="form-control" placeholder="地址" />
+		              </div>
+		               <!--送貨日期-->
+		              <div class="form-group">
+		                <input type="date" id="dateTXT" name="appt" class="form-control"
+		                 required>
+		              </div>
+		
+		              <!--送貨時間-->
+		              <div class="form-group">
+		                
+		                <input type="time" id="timeTXT" name="appt" class="form-control"
+		                min="09:00" max="22:00" required>
+		                <!--<small>上午9點至晚上10點</small>-->
+		              </div>
+		
+		               <!--備註-->
+		              <div class="form-group">
+		                <textarea id="memoTXT" class="form-control" rows="6" placeholder="備註資訊"></textarea>
+		              </div>
+		              
+		           	 <div style="float:right;">
+			         	<button class="buttonA" onClick="insClick()" >訂購</button>
+			         </div>
+		          
+		          <div style="clear: both;"></div>
             </div>
           </div>
         </section>
       </div>
-    </div> 
+    </div>
+    <!-- Modal --> 
+    <div class="modal fade" id="resultModal" tabindex="-1" aria-labelledby="resultModalTitleLB" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="resultModalTitleLB">
+			</h5>
+	      </div>
+	      <div class="modal-body" id="resultModalBodyLB">
+			<div class="form-group">
+	              <input type="text" id="itemMemoTXT" class="form-control" placeholder="商品備註" />
+	          </div>
+	          <div class="form-group">
+              數量：<select id="numSEL" ></select>個
+              </div> 
+              <label style="display: none;" id="itemIdHiddenLB"></label>
+              <label style="display: none;" id="itemPriceHiddenLB"></label>
+	      </div>
+	      <div class="modal-footer">
+	      	<button class="buttonA" onClick="addClick()" data-dismiss="modal">添加</button> 
+	        <button class="buttonA" style="background-color:gray;" data-dismiss="modal">取消</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
     
  </body>
  </html>
